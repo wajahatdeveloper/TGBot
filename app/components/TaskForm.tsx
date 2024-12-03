@@ -8,7 +8,7 @@ interface TaskFormProps {
   groupId: string;
 }
 
-export default function TaskForm({ groupId }: TaskFormProps) {
+export default function TaskForm() {
   const [title, setTitle] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -20,8 +20,7 @@ export default function TaskForm({ groupId }: TaskFormProps) {
       await addDoc(collection(db, 'tasks'), {
         title: title.trim(),
         completed: false,
-        createdAt: new Date(),
-        groupId,
+        createdAt: new Date()
       });
 
       setTitle('');

@@ -18,33 +18,33 @@ function TaskBoard() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // const launchParams = useLaunchParams();
 
-  // useEffect(() => {
-  //   const initializeComponent = async () => {
-  //     try {
-  //       // if (launchParams?.startParam) {
-  //       //   const encodedGroupId = launchParams.startParam;
-  //       //   try {
-  //       //     const decodedGroupId = atob(encodedGroupId);
-  //       //     console.log("Decoded Group ID:", decodedGroupId);
-  //       //     setGroupId(decodedGroupId);
-  //       //   } catch (error) {
-  //       //     console.error("Error decoding group ID:", error);
-  //       //     setError("Invalid group ID format");
-  //       //   }
-  //       // } else {
-  //       //   console.log("No start_param available");
-  //       //   setError("No group ID provided");
-  //       // }
-  //     } catch (error) {
-  //       console.error("Error in initializeComponent:", error);
-  //       setError("An error occurred while initializing the component");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+     const initializeComponent = async () => {
+      try {
+        // if (launchParams?.startParam) {
+        //   const encodedGroupId = launchParams.startParam;
+        //   try {
+        //     const decodedGroupId = atob(encodedGroupId);
+        //     console.log("Decoded Group ID:", decodedGroupId);
+        //     setGroupId(decodedGroupId);
+        //   } catch (error) {
+        //     console.error("Error decoding group ID:", error);
+        //     setError("Invalid group ID format");
+        //   }
+        // } else {
+        //   console.log("No start_param available");
+        //   setError("No group ID provided");
+        // }
+       } catch (error) {
+         console.error("Error in initializeComponent:", error);
+         setError("An error occurred while initializing the component");
+       } finally {
+         setIsLoading(false);
+       }
+     };
 
-  //   initializeComponent();
-  // }, [launchParams]);
+    initializeComponent();
+  }, []);
 
   if (isLoading) {
     return <div className="p-8">Loading...</div>;
@@ -54,9 +54,9 @@ function TaskBoard() {
     return <div className="p-8 text-red-500">{error}</div>;
   }
 
-  if (!groupId) {
-    return <div className="p-8">Please provide a valid group ID</div>;
-  }
+  // if (!groupId) {
+  //   return <div className="p-8">Please provide a valid group ID</div>;
+  // }
 
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen p-8 gap-8">
@@ -73,8 +73,8 @@ function TaskBoard() {
       </header>
 
       <main className="flex flex-col gap-8">
-        <TaskForm groupId={groupId} />
-        <TaskList groupId={groupId} />
+        <TaskForm />
+        <TaskList />
       </main>
 
       <footer className="flex justify-center text-sm text-gray-500">

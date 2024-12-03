@@ -10,13 +10,12 @@ interface TaskListProps {
   groupId: string;
 }
 
-export default function TaskList({ groupId }: TaskListProps) {
+export default function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     const q = query(
-      collection(db, 'tasks'),
-      where('groupId', '==', groupId)
+      collection(db, 'tasks')
     );
     
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -28,7 +27,7 @@ export default function TaskList({ groupId }: TaskListProps) {
     });
 
     return () => unsubscribe();
-  }, [groupId]);
+  },[]);
 
   return (
     <ul className="space-y-4">
