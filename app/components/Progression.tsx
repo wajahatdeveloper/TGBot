@@ -12,15 +12,14 @@ export default function Progression({ userId }: { userId: string }) {
 
   useEffect(() => {
 
-// Check if db and userId are defined
-console.log('db:', db);
-console.log('userId:', userId);
+    // If db or userId is undefined, log a message and exit
+    if (!db || !userId) {
+      console.error('Firestore or userId is undefined!');
+      return;
+    }
 
-// If db or userId is undefined, log a message and exit
-if (!db || !userId) {
-  console.error('Firestore or userId is undefined!');
-  return;
-}
+    // Check if db and userId are defined
+    console.log('userId:', userId);
 
     // Reference to the user's document in the 'users' collection
     const userRef = doc(db, 'users', userId);
@@ -45,7 +44,7 @@ if (!db || !userId) {
     };
 
     fetchUserProgress();
-  }, [userId]); // Run this effect when userId changes
+  }, [userId]);
 
   function valuetext(value: number) {
     return `${value}`;

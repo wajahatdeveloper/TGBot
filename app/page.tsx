@@ -15,30 +15,49 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import TelegramUserInfo from './components/TelegramUserInfo';
 
 export default function Home() {
 
-  let userId = "abc";
+  const [startGameParam, setStartGameParam] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const startGame = params.get("startapp") as string;
+    setStartGameParam(startGame);
+    setIsLoading(false); // Mark loading as complete
+  }, []);
+
+
+  if (isLoading) {
+    // Show suspense fallback until loading is complete
+    return <div className="p-8">Loading...</div>;
+  }
 
   return (
     <Suspense fallback={<div className="p-8">Loading...</div>}>
-      <TelegramUserInfo></TelegramUserInfo>
       <div className="flex justify-center items-center min-h-screen">
         {/* Container for buttons with vertical layout */}
         <div className="flex flex-col justify-center items-center space-y-4 max-w-xs w-full">
-          <Progression userId={userId}></Progression>
-          <Rewards></Rewards>
-          <Button variant="contained" className="w-full">
-            Goto Dubai City
-          </Button>
-          <Button variant="contained" className="w-full">
-            Goto San Francisco City
-          </Button>
-          <hr/>
-          <Button variant="outlined" className="w-full">
-            Share
-          </Button>
+        {startGameParam ? (
+          <>
+            <Progression userId={startGameParam} />
+            <Rewards />
+            <Button variant="contained" className="w-full">
+              Goto Dubai City
+            </Button>
+            <Button variant="contained" className="w-full">
+              Goto San Francisco City
+            </Button>
+            <hr />
+            <Button variant="outlined" className="w-full">
+              Share
+            </Button>
+          </>
+        ) : (
+          <div>No startGame parameter found.</div>
+        )}
         </div>
       </div>
     </Suspense>
