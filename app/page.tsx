@@ -94,19 +94,25 @@ import '@fontsource/roboto/700.css';
 // }
 
 export default function Home() {
+
+  let userId = "abc";
+
   return (
     <Suspense fallback={<div className="p-8">Loading...</div>}>
-      {/* <TaskBoardClient /> */}
       <div className="flex justify-center items-center min-h-screen">
         {/* Container for buttons with vertical layout */}
         <div className="flex flex-col justify-center items-center space-y-4 max-w-xs w-full">
-          <Progression></Progression>
+          <Progression userId={userId}></Progression>
           <Rewards></Rewards>
           <Button variant="contained" className="w-full">
             Goto Dubai City
           </Button>
           <Button variant="contained" className="w-full">
             Goto San Francisco City
+          </Button>
+          <hr/>
+          <Button variant="outlined" className="w-full">
+            Share
           </Button>
         </div>
       </div>

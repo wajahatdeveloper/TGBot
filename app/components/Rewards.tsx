@@ -27,7 +27,7 @@ export default function Rewards() {
 
   return (
     <ul className="space-y-4">
-      Rewards
+      <h4 className="font-bold text-xl text-white-800 text-center">Rewards</h4>
     </ul>
   );
 }
