@@ -12,8 +12,11 @@
     "bot:start": "node dist/bot/index.js"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
+    "@mui/material": "^6.1.9",
     "@telegram-apps/sdk-react": "^2.0.9",
     "dotenv": "^16.4.5",
     "firebase": "^11.0.1",
