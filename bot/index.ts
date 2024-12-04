@@ -5,22 +5,27 @@ if (!BOT_TOKEN) {
   throw new Error('BOT_TOKEN must be provided!');
 }
 
-// const SocksAgent = require('socks5-https-client/lib/Agent');
-// const socksAgent = new SocksAgent({
-//   socksHost: "172.236.20.223",
-//   socksPort: 443,
-//   socksSecret: "eee257a3ee2a49593c1f7019f345c60723733130312e646976617263646e2e636f6d"
-// });
-
-// const bot = new Telegraf(BOT_TOKEN, {
-//   telegram: { agent: socksAgent }
-// });
-
 const bot = new Telegraf(BOT_TOKEN);
+
+// Set the webhook (only once)
+const setWebhook = async () => {
+  try {
+    await bot.telegram.setWebhook(`${process.env.WEBHOOK_URL}/api/bot`);
+    console.log('Webhook set successfully');
+  } catch (error) {
+    console.error('Error setting webhook:', error);
+  }
+};
+
+// Ensure webhook is set
+setWebhook();
 
 // Basic commands
 bot.command('start', (ctx: any) => {
   ctx.reply('Welcome to Ark Game Bot! 🚀\nUse /help to see available commands.');
+
+  const userId = ctx.from.id;
+  //ctx.reply(`Hello! Your user ID is: ${userId}`);
 });
 
 bot.command('help', (ctx: any) => {
