@@ -6,7 +6,7 @@ import { db } from '@/app/lib/firebase';
 import TaskItem from '@/app/components/TaskItem';
 import { Task } from '@/app/types/task';
 
-export default function Stats() {
+export default function Progression() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Stats() {
 
   return (
     <ul className="space-y-4">
-      Stats
+      Progression
     </ul>
   );
 }
