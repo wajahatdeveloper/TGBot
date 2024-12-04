@@ -6,10 +6,15 @@ import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 // import { useLaunchParams } from "@telegram-apps/sdk-react";
 import dynamic from 'next/dynamic';
-import { Button } from '@headlessui/react';
+import Button from '@mui/material/Button';
 import Stats from "./components/Rewards";
 import Progression from './components/Progression';
 import Rewards from './components/Rewards';
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 // Créer un composant client-only pour le TaskBoard
 // const TaskBoardClient = dynamic(() => Promise.resolve(TaskBoard), {
@@ -97,10 +102,10 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center space-y-4 max-w-xs w-full">
           <Progression></Progression>
           <Rewards></Rewards>
-          <Button className="rounded bg-sky-600 py-2 px-4 text-sm text-white hover:bg-sky-500 active:bg-sky-700 w-full">
+          <Button variant="contained" className="w-full">
             Goto Dubai City
           </Button>
-          <Button className="rounded bg-sky-600 py-2 px-4 text-sm text-white hover:bg-sky-500 active:bg-sky-700 w-full">
+          <Button variant="contained" className="w-full">
             Goto San Francisco City
           </Button>
         </div>
