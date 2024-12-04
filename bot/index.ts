@@ -10,8 +10,9 @@ const bot = new Telegraf(BOT_TOKEN);
 // Set the webhook (only once)
 const setWebhook = async () => {
   try {
-    await bot.telegram.setWebhook(`${process.env.WEBHOOK_URL}/api/bot`);
-    console.log('Webhook set successfully');
+    var url = `${process.env.WEBHOOK_URL}/api/bot`;
+    await bot.telegram.setWebhook(url);
+    console.log('Webhook set successfully ' + url);
   } catch (error) {
     console.error('Error setting webhook:', error);
   }
