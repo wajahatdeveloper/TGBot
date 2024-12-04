@@ -6,6 +6,7 @@ import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 // import { useLaunchParams } from "@telegram-apps/sdk-react";
 import dynamic from 'next/dynamic';
+import { Button } from '@headlessui/react';
 
 // Créer un composant client-only pour le TaskBoard
 const TaskBoardClient = dynamic(() => Promise.resolve(TaskBoard), {
@@ -87,7 +88,18 @@ function TaskBoard() {
 export default function Home() {
   return (
     <Suspense fallback={<div className="p-8">Loading...</div>}>
-      <TaskBoardClient />
+      {/* <TaskBoardClient /> */}
+      <div className="flex justify-center items-center min-h-screen">
+        {/* Container for buttons with vertical layout */}
+        <div className="flex flex-col justify-center items-center space-y-4 max-w-xs w-full">
+          <Button className="rounded bg-sky-600 py-2 px-4 text-sm text-white hover:bg-sky-500 active:bg-sky-700 w-full">
+            Goto Dubai City
+          </Button>
+          <Button className="rounded bg-sky-600 py-2 px-4 text-sm text-white hover:bg-sky-500 active:bg-sky-700 w-full">
+            Goto San Francisco City
+          </Button>
+        </div>
+      </div>
     </Suspense>
   );
 }
