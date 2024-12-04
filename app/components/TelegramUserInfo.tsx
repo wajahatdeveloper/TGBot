@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from 'react';
 
 const TelegramUserInfo = () => {
@@ -5,7 +7,7 @@ const TelegramUserInfo = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const res = await fetch('/api/bot');
+      const res = await fetch(`http://${process.env.NEXT_PUBLIC_WEBHOOK_URL}/api/bot`);
       const data = await res.json();
       console.log('Bot Info:', data);
       setUserId(data.userId);
