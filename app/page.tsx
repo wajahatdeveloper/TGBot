@@ -44,14 +44,14 @@ export default function Home() {
           <>
             <Progression userId={startGameParam} />
             <Rewards />
-            <Button variant="contained" className="w-full">
+            <Button variant="contained" className="w-full" onClick={GotoDubai}>
               Goto Dubai City
             </Button>
-            <Button variant="contained" className="w-full">
+            <Button variant="contained" className="w-full" onClick={GotoSf}>
               Goto San Francisco City
             </Button>
             <hr />
-            <Button variant="outlined" className="w-full">
+            <Button variant="outlined" className="w-full" onClick={shareUrl}>
               Share
             </Button>
           </>
@@ -63,3 +63,19 @@ export default function Home() {
     </Suspense>
   );
 }
+
+const GotoDubai = () => {
+  window.open("https://www.example.com", "_blank");
+};
+
+const GotoSf = () => {
+  window.open("https://www.example.com", "_blank");
+};
+
+const shareUrl = () => {
+  const url = "https://www.example.com"; // URL to share
+  const text = "Check out this amazing website!"; // Custom message
+  const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+
+  window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
+};
