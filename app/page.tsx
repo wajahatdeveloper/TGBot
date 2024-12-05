@@ -56,7 +56,7 @@ export default function Home() {
             </Button>
           </>
         ) : (
-          <div>No startGame parameter found.</div>
+          <div>No startapp parameter found.</div>
         )}
         </div>
       </div>
