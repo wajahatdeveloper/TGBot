@@ -18,14 +18,14 @@ import '@fontsource/roboto/700.css';
 
 export default function Home() {
 
-  const [startGameParam, setStartGameParam] = useState<string>("");
+  const [startAppParam, setStartAppParam] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Parse URL parameters
     const params = new URLSearchParams(window.location.search);
-    const startGame = params.get("startapp") as string;
-    setStartGameParam(startGame);
+    const startapp = params.get("startapp") as string;
+    setStartAppParam(startapp);
     setIsLoading(false); // Mark loading as complete
   }, []);
 
@@ -40,10 +40,10 @@ export default function Home() {
       <div className="flex justify-center items-center min-h-screen">
         {/* Container for buttons with vertical layout */}
         <div className="flex flex-col justify-center items-center space-y-4 max-w-xs w-full">
-        {startGameParam ? (
+        {startAppParam ? (
           <>
-            <Progression userId={startGameParam} />
-            <Rewards userId={startGameParam} />
+            <Progression userId={startAppParam} />
+            <Rewards userId={startAppParam} />
             <hr />
             <Button variant="contained" className="w-full" onClick={GotoDubai}>
               Goto Dubai City
