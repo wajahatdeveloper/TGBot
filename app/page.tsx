@@ -43,7 +43,8 @@ export default function Home() {
         {startGameParam ? (
           <>
             <Progression userId={startGameParam} />
-            <Rewards />
+            <Rewards userId={startGameParam} />
+            <hr />
             <Button variant="contained" className="w-full" onClick={GotoDubai}>
               Goto Dubai City
             </Button>

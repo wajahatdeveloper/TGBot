@@ -1,33 +1,57 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '@/app/lib/firebase';
-import TaskItem from '@/app/components/TaskItem';
-import { Task } from '@/app/types/task';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/app/lib/firebase';  // Ensure db is correctly initialized
+import { Slider } from '@mui/material';
 
-export default function Rewards() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+export default function Rewards({ userId }: { userId: string }) {
+  // Initialize state with a default value to avoid uncontrolled -> controlled warning
+  const [badgesCount, setbadgesCount] = useState<number>(0);
+  const [coinsCount, setcoinsCount] = useState<number>(0);
 
   useEffect(() => {
-    const q = query(
-      collection(db, 'tasks')
-    );
-    
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const taskList: Task[] = [];
-      querySnapshot.forEach((doc) => {
-        taskList.push({ id: doc.id, ...doc.data() } as Task);
-      });
-      setTasks(taskList);
-    });
 
-    return () => unsubscribe();
-  },[]);
+    // If db or userId is undefined, log a message and exit
+    if (!db || !userId) {
+      console.error('Firestore or userId is undefined!');
+      return;
+    }
+
+    // Check if db and userId are defined
+    console.log('userId:', userId);
+
+    // Reference to the user's document in the 'users' collection
+    const userRef = doc(db, 'users', userId);
+
+    // Fetch the user's document
+    const fetchUserProgress = async () => {
+      try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          if (userData?.badgesCount !== undefined && userData?.coinsCount !== undefined) {
+            setbadgesCount(userData.badgesCount);
+            setcoinsCount(userData.coinsCount);
+          }
+        } else {
+          console.log('No such document!');
+        }
+      } catch (error) {
+        console.error('Error fetching user progress:', error);
+      }
+    };
+
+    fetchUserProgress();
+  }, [userId]);
 
   return (
-    <ul className="space-y-4">
+    <ul className="space-y-4" style={{ width: "100%" }}>
       <h4 className="font-bold text-xl text-white-800 text-center">Rewards</h4>
-    </ul>
+      <h5>Badges</h5>
+      <h6>{badgesCount}</h6>
+      <h5>Coins</h5>
+      <h6>{coinsCount}</h6>
+      </ul>
   );
 }
