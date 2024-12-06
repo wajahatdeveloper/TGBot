@@ -18,6 +18,24 @@ import '@fontsource/roboto/700.css';
 
 export default function Home() {
 
+  const GotoDubai = () => {
+    window.open(`https://www.example.com?userId=${startAppParam}`, "_blank");
+  };
+  
+  const GotoSf = () => {
+    window.open("https://www.example.com?userId=${startAppParam}", "_blank");
+  };
+  
+  const shareUrl = () => {
+    // const url = "https://www.example.com"; // URL to share
+    // const text = "Check out this amazing website!"; // Custom message
+    // const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    const botUsername = "@ark786_bot"; // Replace with your bot's username
+    const telegramShareUrl = `https://t.me/${botUsername}`;
+  
+    window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
+  };
+
   const [startAppParam, setStartAppParam] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,19 +82,3 @@ export default function Home() {
     </Suspense>
   );
 }
-
-const GotoDubai = () => {
-  window.open("https://www.example.com", "_blank");
-};
-
-const GotoSf = () => {
-  window.open("https://www.example.com", "_blank");
-};
-
-const shareUrl = () => {
-  const url = "https://www.example.com"; // URL to share
-  const text = "Check out this amazing website!"; // Custom message
-  const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-
-  window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
-};
