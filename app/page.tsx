@@ -19,20 +19,18 @@ import '@fontsource/roboto/700.css';
 export default function Home() {
 
   const GotoDubai = () => {
-    window.open(`https://www.example.com?userId=${startAppParam}`, "_blank");
+    window.open(`https://zohaibb936.itch.io/dubai?userId=${startAppParam}`, "_blank");
   };
   
   const GotoSf = () => {
-    window.open("https://www.example.com?userId=${startAppParam}", "_blank");
+    window.open(`https://zohaibb936.itch.io/sanfrancisco?userId=${startAppParam}`, "_blank");
   };
   
   const shareUrl = () => {
-    // const url = "https://www.example.com"; // URL to share
-    // const text = "Check out this amazing website!"; // Custom message
-    // const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-    const botUsername = "@ark786_bot"; // Replace with your bot's username
-    const telegramShareUrl = `https://t.me/${botUsername}`;
-  
+    const url = "https://t.me/ark786_bot"; // URL to share
+    const text = ""; // Custom message
+    const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+
     window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
   };
 
