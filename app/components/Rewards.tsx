@@ -30,9 +30,9 @@ export default function Rewards({ userId }: { userId: string }) {
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          if (userData?.badgesCount !== undefined && userData?.coinsCount !== undefined) {
-            setbadgesCount(userData.badgesCount);
-            setcoinsCount(userData.coinsCount);
+          if (userData?.badgesCollected !== undefined && userData?.coinsCollected !== undefined) {
+            setbadgesCount(userData.badgesCollected);
+            setcoinsCount(userData.coinsCollected);
           }
         } else {
           console.log('No such document!');
