@@ -15,6 +15,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import NavTabs from './components/NavTabs';
 
 export default function Home() {
 
@@ -71,6 +72,7 @@ export default function Home() {
             <Button variant="outlined" className="w-full" onClick={shareUrl}>
               Share
             </Button>
+            <NavTabs></NavTabs>
           </>
         ) : (
           <div>No startapp parameter found.</div>

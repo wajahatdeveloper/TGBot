@@ -17,6 +17,7 @@
     "@fontsource/roboto": "^5.1.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
+    "@mui/icons-material": "^6.2.0",
     "@mui/material": "^6.1.9",
     "@telegram-apps/sdk-react": "^2.0.9",
     "dotenv": "^16.4.5",
