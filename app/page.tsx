@@ -92,10 +92,10 @@ export default function Home() {
       case 0: // home
         return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Button variant="contained" onClick={GotoDubai}>
+      <Button variant="outlined" onClick={GotoDubai}>
         Goto Dubai City
       </Button>
-      <Button variant="contained" onClick={GotoSf}>
+      <Button variant="outlined" onClick={GotoSf}>
         Goto San Francisco City
       </Button>
     </div>
