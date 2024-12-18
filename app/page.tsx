@@ -41,6 +41,7 @@ export default function Home() {
     
     window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
 
+    
     return (
       <div>
         {/* Correct way to reference images from the public directory */}
