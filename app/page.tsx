@@ -1,5 +1,7 @@
 "use client";
 
+import useMediaQuery from '@mui/material/useMediaQuery'; // Import for responsive behavior
+
 import { Suspense, useEffect, useState } from 'react';
 import Image from "next/image";
 // import { useLaunchParams } from "@telegram-apps/sdk-react";
@@ -26,10 +28,13 @@ import '@fontsource/roboto/700.css';
 
 export default function Home() {
   
+  const isMobile = useMediaQuery('(max-width:600px)'); // Check if the screen width is less than 600px
+  
   const GotoDubai = () => {
     window.open(`https://zohaibb936.itch.io/dubai?userId=${startAppParam}`, "_blank");
   };
   
+
   const GotoSf = () => {
     window.open(`https://zohaibb936.itch.io/sanfrancisco?userId=${startAppParam}`, "_blank");
   };
@@ -40,21 +45,22 @@ export default function Home() {
     const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     
     window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
-
     
     return (
       <div>
         {/* Correct way to reference images from the public directory */}
         <Image src="/dubai.jpg" alt="Dubai" width={300} height={200} />
         <Image src="/sf.jpg" alt="San Francisco" width={300} height={200} />
+        
+        
       </div>
     );
   };
-
+  
   const [startAppParam, setStartAppParam] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [navValue, setNavValue] = React.useState(0);
-
+  
   useEffect(() => {
     // Parse URL parameters
     const params = new URLSearchParams(window.location.search);
@@ -107,13 +113,13 @@ export default function Home() {
                 src="/dubai.jpg"
                 alt="Dubai Complex"
                 onClick={GotoDubai}
-                label="Dubai Complex"
+                label="Dubai"
             />
             <ComplexThumbnail
                 src="/sf.jpg"
                 alt="San Francisco Complex"
                 onClick={GotoSf}
-                label="San Francisco Complex"
+                label="San Francisco"
             />
         </div>
     );
@@ -127,6 +133,7 @@ export default function Home() {
       </Button>
     </div>
         );
+        */
       case 1: // trophy
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '75%' }}>
@@ -134,7 +141,6 @@ export default function Home() {
           <Rewards userId={startAppParam} />
         </div>
       );
-      */
       case 2: // coin
         return <p>Coin Page</p>;
       case 3: // account
@@ -148,44 +154,98 @@ export default function Home() {
     }
   };
 
-  return (
-    <Suspense fallback={<div className="p-8">Loading...</div>}>
-       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh", // Full viewport height
-          justifyContent: "space-between", // Push content and tabs apart
-        }}
-      >
-        {/* Main content area */}
-        <div style={{ flexGrow: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-          {startAppParam ? (
-            project() // Dynamically rendered content
-          ) : (
-            <div>No startapp parameter found.</div>
-          )}
-        </div>
 
-        {/* Tabs - Always at the bottom */}
-        <div style={{ borderTop: "1px solid #ccc" }}>
-        <Tabs
-    value={navValue}
-    onChange={handleChange}
-    aria-label="icon tabs example"
-    variant="fullWidth"
-    style={{ width: "100%" }}
->
-    <Tab icon={<HomeIcon />} aria-label="explore-complexes" />
-    <Tab icon={<EmojiEventsIcon />} aria-label="challenges-achievements" />
-    <Tab icon={<PaidIcon />} aria-label="harmony-wallet" />
-    <Tab icon={<ChatBubbleIcon />} aria-label="community-hub" />
-    <Tab icon={<AccountCircleIcon />} aria-label="profile-progress" />
-</Tabs>
-        </div>
+
+  return (
+    
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        justifyContent: "space-between",
+      }}
+    >
+      {/* Main content area */}
+      <div style={{ flexGrow: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        {startAppParam ? (
+          project() // Dynamically rendered content
+        ) : (
+          <div>No startapp parameter found.</div>
+        )}
       </div>
-    </Suspense>
+
+      {/* Responsive Bottom Navigation */}
+      <div style={{ borderTop: "1px solid #ccc", backgroundColor: "#f5f5f5" }}>
+      <Tabs
+  value={navValue}
+  onChange={handleChange}
+  aria-label="navigation tabs"
+  variant="fullWidth" // Ensure buttons are evenly spaced
+  orientation="horizontal"
+  TabIndicatorProps={{
+    style: { display: "none" }, // Hide the underline for a cleaner look
+  }}
+  style={{
+    display: "flex",
+    justifyContent: "space-between", // Evenly distribute buttons
+    backgroundColor: "#f5f5f5", // Background for the nav bar
+    padding: "4px 0", // Add padding for mobile spacing
+  }}
+>
+  <Tab
+    icon={<HomeIcon style={{ fontSize: "20px" }} />}
+    aria-label="Explore"
+    style={{
+      flexGrow: 1, // Ensure each button takes equal space
+      minWidth: 0, // Prevent buttons from exceeding their container
+    }}
+    label={isMobile ? null : "Explore"}
+  />
+  <Tab
+    icon={<EmojiEventsIcon style={{ fontSize: "20px" }} />}
+    aria-label="Achievements"
+    style={{
+      flexGrow: 1,
+      minWidth: 0,
+    }}
+    label={isMobile ? null : "Achievements"}
+  />
+  <Tab
+    icon={<PaidIcon style={{ fontSize: "20px" }} />}
+    aria-label="Wallet"
+    style={{
+      flexGrow: 1,
+      minWidth: 0,
+    }}
+    label={isMobile ? null : "Wallet"}
+  />
+  <Tab
+    icon={<ChatBubbleIcon style={{ fontSize: "20px" }} />}
+    aria-label="Community"
+    style={{
+      flexGrow: 1,
+      minWidth: 0,
+    }}
+    label={isMobile ? null : "Community"}
+  />
+  <Tab
+    icon={<AccountCircleIcon style={{ fontSize: "20px" }} />}
+    aria-label="Profile"
+    style={{
+      flexGrow: 1,
+      minWidth: 0,
+    }}
+    label={isMobile ? null : "Profile"}
+  />
+</Tabs>
+
+      </div>
+    </div>
+  </Suspense>
   );
+
 }
 
 import { StaticImageData } from 'next/image'; // Import the type

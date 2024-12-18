@@ -17,8 +17,7 @@
 */
 @font-face {
   font-family: 'Lato';
-  src: url('/fonts/Lato-Regular.woff2') format('woff2'),
-       url('/fonts/Lato-Regular.woff') format('woff');
+  src: url('/fonts/Lato-Regular.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -28,4 +27,14 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Lato', Verdana, Tahoma, Geneva, sans-serif; 
+}
+@media (max-width: 600px) {
+  .MuiTab-root {
+    min-width: 0; /* Reduce minimum width for tabs */
+    padding: 6px; /* Reduce padding for smaller devices */
+  }
+
+  .MuiTab-wrapper {
+    font-size: 12px; /* Smaller font size for labels */
+  }
 }
