@@ -23,9 +23,6 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-// Import your image assets
-import dubaiImage from './public/dubai.jpg'; // Path to your Dubai image
-import sfImage from './public/sf.jpg'; // Path to your San Francisco image
 
 export default function Home() {
   
@@ -43,6 +40,7 @@ export default function Home() {
     const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
     
     window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
+
     return (
       <div>
         {/* Correct way to reference images from the public directory */}
@@ -104,32 +102,18 @@ export default function Home() {
       case 0: // home
       return (
         <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-            <div
-                style={{ cursor: 'pointer', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}
+            <ComplexThumbnail
+                src="/dubai.jpg"
+                alt="Dubai Complex"
                 onClick={GotoDubai}
-            >
-                <Image
-                    src={dubaiImage}
-                    alt="Dubai Complex"
-                    width={300} // Adjust as needed
-                    height={200} // Adjust as needed
-                    style={{ objectFit: 'cover' }} // Maintain aspect ratio
-                />
-                <div style={{ padding: '8px', textAlign: 'center' }}>Dubai Complex</div> {/* Add a label */}
-            </div>
-            <div
-                style={{ cursor: 'pointer', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}
+                label="Dubai Complex"
+            />
+            <ComplexThumbnail
+                src="/sf.jpg"
+                alt="San Francisco Complex"
                 onClick={GotoSf}
-            >
-                <Image
-                    src={sfImage}
-                    alt="San Francisco Complex"
-                    width={300} // Adjust as needed
-                    height={200} // Adjust as needed
-                    style={{ objectFit: 'cover' }} // Maintain aspect ratio
-                />
-                 <div style={{ padding: '8px', textAlign: 'center' }}>San Francisco Complex</div> {/* Add a label */}
-            </div>
+                label="San Francisco Complex"
+            />
         </div>
     );
         /*return (
@@ -202,3 +186,36 @@ export default function Home() {
     </Suspense>
   );
 }
+
+import { StaticImageData } from 'next/image'; // Import the type
+
+interface ComplexThumbnailProps {
+    src: string | StaticImageData; // Define the type of src
+    alt: string;
+    onClick: () => void; // Define the type of onClick
+    label: string;
+}
+
+const ComplexThumbnail = ({ src, alt, onClick, label }: ComplexThumbnailProps) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  return (
+      <div
+          style={{
+              cursor: 'pointer',
+              border: '1px solid #ccc',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out', // Smooth transitions
+              transform: isHovered ? 'scale(1.05)' : 'scale(1)', // Scale on hover
+              boxShadow: isHovered ? '0 4px 8px rgba(0, 0, 0, 0.1)' : 'none', // Subtle shadow on hover
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={onClick}
+      >
+          <Image src={src} alt={alt} width={300} height={169} style={{ objectFit: 'cover' }} />
+          <div style={{ padding: '8px', textAlign: 'center' }}>{label}</div>
+      </div>
+  );
+};

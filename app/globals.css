@@ -13,9 +13,11 @@
     --foreground: #ededed;
   }
 } */
+@import '@fontsource/lato';
 
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: 'Lato', sans-serif; /* Apply to the whole body */
   font-family: Arial, Helvetica, sans-serif;
 }
