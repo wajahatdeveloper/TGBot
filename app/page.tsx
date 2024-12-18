@@ -14,6 +14,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -22,22 +23,33 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-export default function Home() {
+// Import your image assets
+import dubaiImage from './public/dubai.jpg'; // Path to your Dubai image
+import sfImage from './public/sf.jpg'; // Path to your San Francisco image
 
+export default function Home() {
+  
   const GotoDubai = () => {
     window.open(`https://zohaibb936.itch.io/dubai?userId=${startAppParam}`, "_blank");
   };
-
+  
   const GotoSf = () => {
     window.open(`https://zohaibb936.itch.io/sanfrancisco?userId=${startAppParam}`, "_blank");
   };
-
+  
   const shareUrl = () => {
     const url = "https://t.me/ark786_bot"; // URL to share
     const text = ""; // Custom message
     const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-
+    
     window.open(telegramShareUrl, "_blank"); // Open Telegram share in a new tab
+    return (
+      <div>
+        {/* Correct way to reference images from the public directory */}
+        <Image src="/dubai.jpg" alt="Dubai" width={300} height={200} />
+        <Image src="/sf.jpg" alt="San Francisco" width={300} height={200} />
+      </div>
+    );
   };
 
   const [startAppParam, setStartAppParam] = useState<string>("");
@@ -90,7 +102,37 @@ export default function Home() {
   const project = () => {
     switch (navValue) {
       case 0: // home
-        return (
+      return (
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
+            <div
+                style={{ cursor: 'pointer', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}
+                onClick={GotoDubai}
+            >
+                <Image
+                    src={dubaiImage}
+                    alt="Dubai Complex"
+                    width={300} // Adjust as needed
+                    height={200} // Adjust as needed
+                    style={{ objectFit: 'cover' }} // Maintain aspect ratio
+                />
+                <div style={{ padding: '8px', textAlign: 'center' }}>Dubai Complex</div> {/* Add a label */}
+            </div>
+            <div
+                style={{ cursor: 'pointer', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}
+                onClick={GotoSf}
+            >
+                <Image
+                    src={sfImage}
+                    alt="San Francisco Complex"
+                    width={300} // Adjust as needed
+                    height={200} // Adjust as needed
+                    style={{ objectFit: 'cover' }} // Maintain aspect ratio
+                />
+                 <div style={{ padding: '8px', textAlign: 'center' }}>San Francisco Complex</div> {/* Add a label */}
+            </div>
+        </div>
+    );
+        /*return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <Button variant="outlined" onClick={GotoDubai}>
         Goto Dubai City
@@ -107,7 +149,7 @@ export default function Home() {
           <Rewards userId={startAppParam} />
         </div>
       );
-      
+      */
       case 2: // coin
         return <p>Coin Page</p>;
       case 3: // account
@@ -142,18 +184,19 @@ export default function Home() {
 
         {/* Tabs - Always at the bottom */}
         <div style={{ borderTop: "1px solid #ccc" }}>
-          <Tabs
-            value={navValue}
-            onChange={handleChange}
-            aria-label="icon tabs example"
-            variant="fullWidth"
-            style={{ width: "100%" }}
-          >
-            <Tab icon={<HomeIcon />} aria-label="home" />
-            <Tab icon={<EmojiEventsIcon />} aria-label="trophy" />
-            <Tab icon={<PaidIcon />} aria-label="coin" />
-            <Tab icon={<AccountCircleIcon />} aria-label="account" />
-          </Tabs>
+        <Tabs
+    value={navValue}
+    onChange={handleChange}
+    aria-label="icon tabs example"
+    variant="fullWidth"
+    style={{ width: "100%" }}
+>
+    <Tab icon={<HomeIcon />} aria-label="explore-complexes" />
+    <Tab icon={<EmojiEventsIcon />} aria-label="challenges-achievements" />
+    <Tab icon={<PaidIcon />} aria-label="harmony-wallet" />
+    <Tab icon={<ChatBubbleIcon />} aria-label="community-hub" />
+    <Tab icon={<AccountCircleIcon />} aria-label="profile-progress" />
+</Tabs>
         </div>
       </div>
     </Suspense>
