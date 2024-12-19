@@ -32,22 +32,29 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 
-const HeaderBar = ({ userId, coins }: { userId: string; coins: number }) => {
+const HeaderBar = ({
+  userId,
+  coins,
+  onAvatarClick,
+}: {
+  userId: string;
+  coins: number;
+  onAvatarClick: () => void;
+}) => {
   return (
-    <AppBar position="fixed" color="default" elevation={1} sx={{ top: 0, zIndex: 1000 }}> 
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0 16px' }}>
-        {/* Title */}
-        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+    <AppBar position="fixed" color="default" elevation={1} sx={{ top: 0, zIndex: 1000 }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           Challenges & Achievements
         </Typography>
-
-        {/* Right Section: Avatar, Coins, and Notifications */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}> {/* Reduced gap */}
-          <MonetizationOnIcon /> {/* Use the Material UI icon */}
-          <Typography variant="body1">
-            {coins}
-          </Typography>
-          <Avatar alt="User Avatar" src={`/user-avatars/${userId}.jpg`} />
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Typography variant="body1">{coins}</Typography>
+          <Avatar
+            alt="User Avatar"
+            src={`/user-avatars/${userId}.jpg`}
+            onClick={onAvatarClick}
+            style={{ cursor: "pointer" }}
+          />
           <IconButton>
             <NotificationsIcon />
           </IconButton>
@@ -103,14 +110,181 @@ const ExplorationCard = ({
     </Card>
   );
 };
+const ProfileScreen = ({
+  userId,
+  dubaiProgress,
+  sfProgress,
+  badgesCount,
+  coinsCount,
+}: {
+  userId: string;
+  dubaiProgress: number;
+  sfProgress: number;
+  badgesCount: number;
+  coinsCount: number;
+}) => {
+  return (
+    <div
+      style={{
+        padding: "16px",
+        overflowY: "scroll",
+        maxHeight: "100vh",
+        scrollbarWidth: "thin",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      {/* Center-align Profile Heading */}
+      <Typography
+        variant="h5"
+        style={{
+          fontWeight: "bold",
+          marginBottom: "16px",
+          textAlign: "center",
+        }}
+      >
+        Profile
+      </Typography>
+
+      {/* Profile Overview */}
+      <div style={{ textAlign: "center", marginBottom: "32px" }}>
+        <Avatar
+          alt="User Avatar"
+          src={`/user-avatars/${userId}.jpg`}
+          style={{ width: "100px", height: "100px", margin: "0 auto" }}
+        />
+        <Typography variant="h6" style={{ marginTop: "8px" }}>
+          Username
+        </Typography>
+        <Typography variant="body2">Customizable Header</Typography>
+      </div>
+
+      {/* Milestone Tracker */}
+      <div style={{ marginBottom: "32px" }}>
+        <Typography
+          variant="h6"
+          style={{
+            fontWeight: "bold",
+            marginBottom: "8px",
+          }}
+        >
+          Milestone Tracker
+        </Typography>
+        <div style={{ marginBottom: "16px" }}>
+          <Typography variant="body1" style={{ marginBottom: "4px" }}>
+            Dubai: {Math.round(dubaiProgress * 100)}% Complete
+          </Typography>
+          <LinearProgress
+            variant="determinate"
+            value={dubaiProgress * 100}
+            style={{ height: "10px", borderRadius: "4px" }}
+          />
+        </div>
+        <div>
+          <Typography variant="body1" style={{ marginBottom: "4px" }}>
+            San Francisco: {Math.round(sfProgress * 100)}% Complete
+          </Typography>
+          <LinearProgress
+            variant="determinate"
+            value={sfProgress * 100}
+            style={{ height: "10px", borderRadius: "4px" }}
+          />
+        </div>
+      </div>
+
+      {/* Badges & Rewards */}
+      <div style={{ marginBottom: "32px" }}>
+        <Typography
+          variant="h6"
+          style={{
+            fontWeight: "bold",
+            marginBottom: "8px",
+          }}
+        >
+          Badges & Rewards
+        </Typography>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            gap: "16px",
+          }}
+        >
+          <div
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              padding: "16px",
+              textAlign: "center",
+              backgroundColor: "#f9f9f9",
+              flex: 1,
+            }}
+          >
+            <Typography variant="h6" style={{ fontWeight: "bold" }}>
+              Badges
+            </Typography>
+            <Typography>{badgesCount}</Typography>
+          </div>
+          <div
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              padding: "16px",
+              textAlign: "center",
+              backgroundColor: "#f9f9f9",
+              flex: 1,
+            }}
+          >
+            <Typography variant="h6" style={{ fontWeight: "bold" }}>
+              Coins
+            </Typography>
+            <Typography>{coinsCount}</Typography>
+          </div>
+        </div>
+      </div>
+
+      {/* Settings Section */}
+      <div style={{ marginBottom: "32px" }}>
+        <Typography
+          variant="h6"
+          style={{
+            fontWeight: "bold",
+            marginBottom: "8px",
+          }}
+        >
+          Settings & Preferences
+        </Typography>
+        <Typography>Manage notifications, wallet connections, and account preferences.</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: "16px" }}
+          onClick={() => console.log("Settings Button Clicked")}
+        >
+          Open Settings
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 export default function Home() {
   
-  const isMobile = useMediaQuery('(max-width:600px)'); // Check if the screen width is less than 600px
-  
+  const isMobile = useMediaQuery('(max-width:600px)');
   const [dubaiProgress, setDubaiProgress] = useState<number>(0);
   const [sfProgress, setSfProgress] = useState<number>(0);
-  
+  const [startAppParam, setStartAppParam] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [navValue, setNavValue] = useState(0);
+
+  <Progression
+  userId={startAppParam}
+  onProgressUpdate={({ dubaiProgress, sfProgress }) => {
+    setDubaiProgress(dubaiProgress);
+    setSfProgress(sfProgress);
+  }}
+/>
+
   const handleProgressUpdate = (progress: { dubaiProgress: number; sfProgress: number }) => {
     setDubaiProgress(progress.dubaiProgress);
     setSfProgress(progress.sfProgress);
@@ -143,23 +317,19 @@ export default function Home() {
     );
   };
   
-  const [startAppParam, setStartAppParam] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [navValue, setNavValue] = React.useState(0);
-  
+  const handleAvatarClick = () => setNavValue(4); // Navigate to Profile screen
+
   useEffect(() => {
-    // Parse URL parameters
     const params = new URLSearchParams(window.location.search);
     const startapp = params.get("startapp") as string;
     setStartAppParam(startapp);
-    setIsLoading(false); // Mark loading as complete
+    setIsLoading(false);
   }, []);
 
 
-  if (isLoading) {
-    // Show suspense fallback until loading is complete
-    return <div className="p-8">Loading...</div>;
-  }
+
+  if (isLoading) return <div className="p-8">Loading...</div>;
+  
 
   function samePageLinkNavigation(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -232,50 +402,121 @@ export default function Home() {
     </div>
         );
         */
-        case 1: // Exploration Progress
-return (
-  <>
-    {/* Header Bar */}
-    <HeaderBar userId={startAppParam} coins={0} />
-
-    {/* Exploration Progress Section */}
-    <div style={{ padding: "16px", textAlign: "center" }}>
-      <Typography variant="h5" style={{ fontWeight: "bold", marginBottom: "16px" }}>
-        Exploration Progress
-      </Typography>
-      {/* Progress Cards */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: isMobile ? "column" : "row",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "16px",
-        }}
-      >
-        {/* Dubai Progress Card */}
-        <ExplorationCard
-          city="Dubai"
-          progress={dubaiProgress}
-          icon={<SearchIcon />}
-          onDetailsClick={() => console.log("Viewing Dubai Progress Details")}
-          image="/dubai.jpg"
-        />
-        {/* San Francisco Progress Card */}
-        <ExplorationCard
-          city="San Francisco"
-          progress={sfProgress}
-          icon={<SearchIcon />}
-          onDetailsClick={() => console.log("Viewing SF Progress Details")}
-          image="/sf.jpg"
-        />
+        case 1: // Page 2: Exploration Progress and Achievements
+        return (
+          <>
+            {/* Header Bar */}
+            <HeaderBar userId={startAppParam} coins={0} onAvatarClick={handleAvatarClick} />
         
-
-      </div> 
-      <Rewards userId={startAppParam} /> 
-    </div>
-  </>
-);
+            {/* Scrollable Content */}
+            <div
+              style={{
+                padding: "16px",
+                paddingTop: "80px", // Prevent overlap with header
+                overflowY: "scroll",
+                maxHeight: "calc(100vh - 64px)", // Adjust for header height
+                scrollbarWidth: "thin",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              <Typography
+                variant="h5"
+                style={{
+                  fontWeight: "bold",
+                  marginBottom: "16px",
+                  textAlign: "center", // Center-align heading
+                }}
+              >
+                Exploration Progress
+              </Typography>
+        
+              {/* Progress Cards */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <ExplorationCard
+                  city="Dubai"
+                  progress={dubaiProgress}
+                  icon={<SearchIcon />}
+                  onDetailsClick={() => console.log("Viewing Dubai Progress Details")}
+                  image="/dubai.jpg"
+                />
+                <ExplorationCard
+                  city="San Francisco"
+                  progress={sfProgress}
+                  icon={<SearchIcon />}
+                  onDetailsClick={() => console.log("Viewing SF Progress Details")}
+                  image="/sf.jpg"
+                />
+              </div>
+        
+              {/* Achievements Section */}
+              <div style={{ marginTop: "32px" }}>
+                <Typography
+                  variant="h5"
+                  style={{
+                    fontWeight: "bold",
+                    marginBottom: "16px",
+                    textAlign: "center", // Center-align heading
+                  }}
+                >
+                  Achievements
+                </Typography>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: isMobile ? "column" : "row",
+                    justifyContent: "center",
+                    gap: "16px",
+                  }}
+                >
+                  <div
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      padding: "16px",
+                      flex: "1",
+                      textAlign: "center",
+                      backgroundColor: "#f9f9f9",
+                    }}
+                  >
+                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                      Badges
+                    </Typography>
+                    <Typography>Total: {0}</Typography>
+                  </div>
+                  <div
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      padding: "16px",
+                      flex: "1",
+                      textAlign: "center",
+                      backgroundColor: "#f9f9f9",
+                    }}
+                  >
+                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                      Coins
+                    </Typography>
+                    <Typography>Total: {0}</Typography>
+                  </div>
+                </div>
+                <div style={{ marginTop: "16px", textAlign: "center" }}>
+                  {/* Center-align Leaderboard Button */}
+                  <Button variant="contained" color="primary">
+                    Leaderboard
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </>
+        );
       case 2: // coin
         return <p>Coin Page</p>;
       case 3: // account
@@ -283,6 +524,16 @@ return (
           <Button variant="outlined" className="w-full" onClick={shareUrl} style={{ width: '75%' }}>
             Share
           </Button>
+        );
+        case 4: // Profile Screen
+        return (
+          <ProfileScreen
+            userId={startAppParam}
+            dubaiProgress={dubaiProgress}
+            sfProgress={sfProgress}
+            badgesCount={0} // Replace with actual badge data from Rewards
+            coinsCount={0} // Replace with actual coin data from Rewards
+          />
         );
       default:
         return <div>Invalid navigation value.</div>;

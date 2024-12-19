@@ -47,7 +47,7 @@ export default function Rewards({ userId }: { userId: string }) {
 
   return (
     <ul className="space-y-4" style={{ width: "100%" }}>
-      <h4 className="font-bold text-xl text-white-800 text-center">Rewards</h4>
+      <h4 className="font-bold text-xl text-white-800 text-center">Achievements</h4>
       <h5>Badges</h5>
       <h6>{badgesCount}</h6>
       <h5>Coins</h5>

@@ -16,35 +16,26 @@ export default function Progression({
   const [sfProgress, setSfProgress] = useState<number>(0);
 
   useEffect(() => {
-    if (!db || !userId) {
-      console.error("Firestore or userId is undefined!");
-      return;
-    }
+    if (!db || !userId) return;
 
-    const userRef = doc(db, "users", userId);
-
-    const fetchUserProgress = async () => {
+    const fetchProgress = async () => {
+      const userRef = doc(db, "users", userId);
       try {
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
-          const userData = userDoc.data();
-          if (userData?.dubaiProgress !== undefined && userData?.sfProgress !== undefined) {
-            setDubaiProgress(userData.dubaiProgress);
-            setSfProgress(userData.sfProgress);
-            onProgressUpdate({
-              dubaiProgress: userData.dubaiProgress,
-              sfProgress: userData.sfProgress,
-            });
-          }
-        } else {
-          console.log("No such document!");
+          const data = userDoc.data();
+          const dubai = data?.dubaiProgress ?? 0;
+          const sf = data?.sfProgress ?? 0;
+          setDubaiProgress(dubai);
+          setSfProgress(sf);
+          onProgressUpdate({ dubaiProgress: dubai, sfProgress: sf });
         }
       } catch (error) {
-        console.error("Error fetching user progress:", error);
+        console.error("Error fetching progress data:", error);
       }
     };
 
-    fetchUserProgress();
+    fetchProgress();
   }, [userId, onProgressUpdate]);
 
   return (
