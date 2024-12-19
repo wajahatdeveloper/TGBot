@@ -19,7 +19,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Paper from '@mui/material/Paper';
+import { Avatar, Typography, IconButton, AppBar, Toolbar } from '@mui/material';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'; // Import the coin icon
+import { Card, CardContent, LinearProgress} from '@mui/material';
+import BusinessIcon from '@mui/icons-material/Business';
+import SearchIcon from '@mui/icons-material/Search';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -27,15 +32,95 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 
+const HeaderBar = ({ userId, coins }: { userId: string; coins: number }) => {
+  return (
+    <AppBar position="fixed" color="default" elevation={1} sx={{ top: 0, zIndex: 1000 }}> 
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0 16px' }}>
+        {/* Title */}
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          Challenges & Achievements
+        </Typography>
+
+        {/* Right Section: Avatar, Coins, and Notifications */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}> {/* Reduced gap */}
+          <MonetizationOnIcon /> {/* Use the Material UI icon */}
+          <Typography variant="body1">
+            {coins}
+          </Typography>
+          <Avatar alt="User Avatar" src={`/user-avatars/${userId}.jpg`} />
+          <IconButton>
+            <NotificationsIcon />
+          </IconButton>
+        </div>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+// Card Component for Exploration Progress
+const ExplorationCard = ({
+  city,
+  progress,
+  icon,
+  onDetailsClick,
+  image,
+}: {
+  city: string;
+  progress: number;
+  icon: JSX.Element;
+  onDetailsClick: () => void;
+  image: string;
+}) => {
+  return (
+    <Card style={{ display: 'flex', flexDirection: 'column', width: '45%', margin: '8px' }}>
+      <img
+        src={image}
+        alt={`${city} `}
+        style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px 4px 0 0' }}
+        />
+      <CardContent style={{ flexGrow: 1 }}>
+        <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '8px' }}>
+          {city} 
+        </Typography>
+        <Box display="flex" alignItems="center" gap="8px">
+          {icon}
+          <Typography variant="body2">Key Milestones</Typography>
+        </Box>
+        <Box marginY="16px">
+          <LinearProgress
+            variant="determinate"
+            value={progress * 100}
+            style={{ height: '10px', borderRadius: '4px' }}
+            />
+          <Typography variant="body2" align="right">
+            {Math.round(progress * 100)}% Complete
+          </Typography>
+        </Box>
+        <Button variant="outlined" onClick={onDetailsClick} fullWidth>
+          View Progress Details
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
 export default function Home() {
   
   const isMobile = useMediaQuery('(max-width:600px)'); // Check if the screen width is less than 600px
+  
+  const [dubaiProgress, setDubaiProgress] = useState<number>(0);
+  const [sfProgress, setSfProgress] = useState<number>(0);
+  
+  const handleProgressUpdate = (progress: { dubaiProgress: number; sfProgress: number }) => {
+    setDubaiProgress(progress.dubaiProgress);
+    setSfProgress(progress.sfProgress);
+  };
   
   const GotoDubai = () => {
     window.open(`https://zohaibb936.itch.io/dubai?userId=${startAppParam}`, "_blank");
   };
   
-
+  
   const GotoSf = () => {
     window.open(`https://zohaibb936.itch.io/sanfrancisco?userId=${startAppParam}`, "_blank");
   };
@@ -121,16 +206,16 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', width: '100%' }}> {/* Changed to column */}
         <ComplexThumbnail
             src="/dubai.jpg"
-            alt="Dubai Complex"
+            alt="Dubai"
             onClick={GotoDubai}
-            label="Dubai Complex"
+            label="Dubai"
             description="Explore the luxurious and modern architecture of Dubai."
         />
         <ComplexThumbnail
             src="/sf.jpg"
-            alt="San Francisco Complex"
+            alt="San Francisco"
             onClick={GotoSf}
-            label="San Francisco Complex"
+            label="San Francisco"
             description="Discover the vibrant culture and iconic landmarks of San Francisco."
         />
     </div>
@@ -147,13 +232,50 @@ export default function Home() {
     </div>
         );
         */
-      case 1: // trophy
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '75%' }}>
-          <Progression userId={startAppParam} />
-          <Rewards userId={startAppParam} />
-        </div>
-      );
+        case 1: // Exploration Progress
+return (
+  <>
+    {/* Header Bar */}
+    <HeaderBar userId={startAppParam} coins={0} />
+
+    {/* Exploration Progress Section */}
+    <div style={{ padding: "16px", textAlign: "center" }}>
+      <Typography variant="h5" style={{ fontWeight: "bold", marginBottom: "16px" }}>
+        Exploration Progress
+      </Typography>
+      {/* Progress Cards */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "16px",
+        }}
+      >
+        {/* Dubai Progress Card */}
+        <ExplorationCard
+          city="Dubai"
+          progress={dubaiProgress}
+          icon={<SearchIcon />}
+          onDetailsClick={() => console.log("Viewing Dubai Progress Details")}
+          image="/dubai.jpg"
+        />
+        {/* San Francisco Progress Card */}
+        <ExplorationCard
+          city="San Francisco"
+          progress={sfProgress}
+          icon={<SearchIcon />}
+          onDetailsClick={() => console.log("Viewing SF Progress Details")}
+          image="/sf.jpg"
+        />
+        
+
+      </div> 
+      <Rewards userId={startAppParam} /> 
+    </div>
+  </>
+);
       case 2: // coin
         return <p>Coin Page</p>;
       case 3: // account
@@ -275,39 +397,42 @@ const ComplexThumbnail = ({ src, alt, onClick, label, description }: ComplexThum
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
-    <Paper
-    elevation={isHovered ? 4 : 2}
-    style={{
-        cursor: 'pointer',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-        transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-        position: 'relative', // Important for absolute positioning of text
-        height: '100%',
-    }}
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
-    onClick={onClick}
->
-    <div style={{ flex: 1, overflow: 'hidden' }}>{/* Image Container */}
-        <Image src={src} alt={alt} fill style={{ objectFit: 'cover' }} sizes="100vw" />
-    </div>
-    <div style={{ // Text Overlay
-        position: 'absolute',
-        bottom: 0, // Position at the bottom
-        left: 0,
-        width: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent black background
-        color: 'white',
-        padding: '16px',
-        textAlign: 'center',
-        backdropFilter: isHovered ? 'blur(5px)' : 'blur(0px)',
-        transition: 'backdrop-filter 0.3s ease'
-    }}>
-        <h3>{label}</h3>
-        <p style={{ fontSize: '0.9rem' }}>{description}</p>
-    </div>
-</Paper>
+      <div
+          style={{
+              cursor: 'pointer',
+              border: '1px solid #ccc',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out', // Smooth transitions
+              transform: isHovered ? 'scale(1.05)' : 'scale(1)', // Scale on hover
+              boxShadow: isHovered ? '0 4px 8px rgba(0, 0, 0, 0.1)' : 'none', // Subtle shadow on hover
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={onClick}
+      >
+          <Image src={src} alt={alt} width={300} height={169} style={{ objectFit: 'cover' }} />
+      <div
+        style={{
+          position: 'absolute', // Overlap the image
+          bottom: 50, // Position at the bottom
+          left: 0, // Start from the left
+          right: 0, // Span the entire width
+          padding: '8px',
+          textAlign: 'center',
+          color: 'white', // Adjust text color for better visibility
+          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+          transition: 'opacity 0.2s ease-in-out', // Smooth opacity change on hover
+          opacity: isHovered ? 1 : 0.7, // Adjust opacity for hover effect
+        }}
+      >
+        
+        <p>{description}</p> {/* Description inside the description container */}
+      </div>
+      <div style={{ padding: '8px', textAlign: 'center' }}>
+
+        {label}  {/* Label outside conditional styles */} 
+      </div> 
+      </div>
   );
 };

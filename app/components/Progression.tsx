@@ -1,54 +1,51 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/app/lib/firebase';  // Ensure db is correctly initialized
-import { Slider } from '@mui/material';
+import { useState, useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/app/lib/firebase";
+import { Slider } from "@mui/material";
 
-export default function Progression({ userId }: { userId: string }) {
-  // Initialize state with a default value to avoid uncontrolled -> controlled warning
+export default function Progression({
+  userId,
+  onProgressUpdate,
+}: {
+  userId: string;
+  onProgressUpdate: (progress: { dubaiProgress: number; sfProgress: number }) => void;
+}) {
   const [dubaiProgress, setDubaiProgress] = useState<number>(0);
   const [sfProgress, setSfProgress] = useState<number>(0);
 
   useEffect(() => {
-
-    // If db or userId is undefined, log a message and exit
     if (!db || !userId) {
-      console.error('Firestore or userId is undefined!');
+      console.error("Firestore or userId is undefined!");
       return;
     }
 
-    // Check if db and userId are defined
-    console.log('userId:', userId);
+    const userRef = doc(db, "users", userId);
 
-    // Reference to the user's document in the 'users' collection
-    const userRef = doc(db, 'users', userId);
-
-    // Fetch the user's document
     const fetchUserProgress = async () => {
       try {
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          // Assuming the document has 'dubaiProgress' and 'sfProgress' fields
           if (userData?.dubaiProgress !== undefined && userData?.sfProgress !== undefined) {
             setDubaiProgress(userData.dubaiProgress);
             setSfProgress(userData.sfProgress);
+            onProgressUpdate({
+              dubaiProgress: userData.dubaiProgress,
+              sfProgress: userData.sfProgress,
+            });
           }
         } else {
-          console.log('No such document!');
+          console.log("No such document!");
         }
       } catch (error) {
-        console.error('Error fetching user progress:', error);
+        console.error("Error fetching user progress:", error);
       }
     };
 
     fetchUserProgress();
-  }, [userId]);
-
-  function valuetext(value: number) {
-    return `${value}`;
-  }
+  }, [userId, onProgressUpdate]);
 
   return (
     <ul className="space-y-4" style={{ width: "100%" }}>
@@ -56,8 +53,7 @@ export default function Progression({ userId }: { userId: string }) {
       <h5>Dubai</h5>
       <Slider
         aria-label="Dubai Progress"
-        value={dubaiProgress} // Controlled value
-        getAriaValueText={valuetext}
+        value={dubaiProgress}
         step={0.1}
         marks
         min={0}
@@ -68,8 +64,7 @@ export default function Progression({ userId }: { userId: string }) {
       <h5>San Francisco</h5>
       <Slider
         aria-label="San Francisco Progress"
-        value={sfProgress} // Controlled value
-        getAriaValueText={valuetext}
+        value={sfProgress}
         step={0.1}
         marks
         min={0}
