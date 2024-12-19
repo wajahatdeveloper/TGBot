@@ -19,6 +19,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Paper from '@mui/material/Paper';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -108,20 +109,32 @@ export default function Home() {
     switch (navValue) {
       case 0: // home
       return (
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-            <ComplexThumbnail
-                src="/dubai.jpg"
-                alt="Dubai Complex"
-                onClick={GotoDubai}
-                label="Dubai"
-            />
-            <ComplexThumbnail
-                src="/sf.jpg"
-                alt="San Francisco Complex"
-                onClick={GotoSf}
-                label="San Francisco"
-            />
-        </div>
+        <div style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row', // Responsive direction
+          gap: '24px',
+          alignItems: 'center',
+          justifyContent: 'center', // Center content
+          width: '100%',
+          height: '75%' // added height
+      }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', width: '100%' }}> {/* Changed to column */}
+        <ComplexThumbnail
+            src="/dubai.jpg"
+            alt="Dubai Complex"
+            onClick={GotoDubai}
+            label="Dubai Complex"
+            description="Explore the luxurious and modern architecture of Dubai."
+        />
+        <ComplexThumbnail
+            src="/sf.jpg"
+            alt="San Francisco Complex"
+            onClick={GotoSf}
+            label="San Francisco Complex"
+            description="Discover the vibrant culture and iconic landmarks of San Francisco."
+        />
+    </div>
+    </div>
     );
         /*return (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -255,28 +268,46 @@ interface ComplexThumbnailProps {
     alt: string;
     onClick: () => void; // Define the type of onClick
     label: string;
+    description : string;
 }
 
-const ComplexThumbnail = ({ src, alt, onClick, label }: ComplexThumbnailProps) => {
+const ComplexThumbnail = ({ src, alt, onClick, label, description }: ComplexThumbnailProps) => {
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
-      <div
-          style={{
-              cursor: 'pointer',
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out', // Smooth transitions
-              transform: isHovered ? 'scale(1.05)' : 'scale(1)', // Scale on hover
-              boxShadow: isHovered ? '0 4px 8px rgba(0, 0, 0, 0.1)' : 'none', // Subtle shadow on hover
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onClick={onClick}
-      >
-          <Image src={src} alt={alt} width={300} height={169} style={{ objectFit: 'cover' }} />
-          <div style={{ padding: '8px', textAlign: 'center' }}>{label}</div>
-      </div>
+    <Paper
+    elevation={isHovered ? 4 : 2}
+    style={{
+        cursor: 'pointer',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+        position: 'relative', // Important for absolute positioning of text
+        height: '100%',
+    }}
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    onClick={onClick}
+>
+    <div style={{ flex: 1, overflow: 'hidden' }}>{/* Image Container */}
+        <Image src={src} alt={alt} fill style={{ objectFit: 'cover' }} sizes="100vw" />
+    </div>
+    <div style={{ // Text Overlay
+        position: 'absolute',
+        bottom: 0, // Position at the bottom
+        left: 0,
+        width: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent black background
+        color: 'white',
+        padding: '16px',
+        textAlign: 'center',
+        backdropFilter: isHovered ? 'blur(5px)' : 'blur(0px)',
+        transition: 'backdrop-filter 0.3s ease'
+    }}>
+        <h3>{label}</h3>
+        <p style={{ fontSize: '0.9rem' }}>{description}</p>
+    </div>
+</Paper>
   );
 };
