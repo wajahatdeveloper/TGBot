@@ -1,9 +1,8 @@
 "use client";
-
-import { useState, useEffect } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/app/lib/firebase";
-import { Slider } from "@mui/material";
+import { useState, useEffect } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/app/lib/firebase';  // Ensure db is correctly initialized
+import { Slider } from '@mui/material';
 
 export default function Progression({
   userId,
@@ -19,7 +18,7 @@ export default function Progression({
     if (!db || !userId) return;
 
     const fetchProgress = async () => {
-      const userRef = doc(db, "users", userId);
+      const userRef = doc(db, 'users', userId);
       try {
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
@@ -31,7 +30,7 @@ export default function Progression({
           onProgressUpdate({ dubaiProgress: dubai, sfProgress: sf });
         }
       } catch (error) {
-        console.error("Error fetching progress data:", error);
+        console.error('Firestore or userId is undefined!');
       }
     };
 
