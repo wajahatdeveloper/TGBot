@@ -471,7 +471,7 @@ export default function Home() {
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: isMobile ? "row" : "row",
+                    flexDirection: isMobile ? "column" : "row",
                     justifyContent: "center",
                     gap: "16px",
                   }}
