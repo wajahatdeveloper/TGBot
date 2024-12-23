@@ -216,7 +216,7 @@ const ProfileScreen = ({
               borderRadius: "8px",
               padding: "16px",
               textAlign: "center",
-              backgroundColor: "#f9f9f9",
+              backgroundColor: "#000000",
               flex: 1,
             }}
           >
@@ -231,7 +231,7 @@ const ProfileScreen = ({
               borderRadius: "8px",
               padding: "16px",
               textAlign: "center",
-              backgroundColor: "#f9f9f9",
+              backgroundColor: "#000000",
               flex: 1,
             }}
           >
@@ -483,7 +483,7 @@ export default function Home() {
                       padding: "16px",
                       flex: "1",
                       textAlign: "center",
-                      backgroundColor: "#f9f9f9",
+                      backgroundColor: "#000000",
                     }}
                   >
                     <Typography variant="h6" style={{ fontWeight: "bold" }}>
@@ -498,7 +498,7 @@ export default function Home() {
                       padding: "16px",
                       flex: "1",
                       textAlign: "center",
-                      backgroundColor: "#f9f9f9",
+                      backgroundColor: "#000000",
                     }}
                   >
                     <Typography variant="h6" style={{ fontWeight: "bold" }}>

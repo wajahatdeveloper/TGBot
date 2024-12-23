@@ -18,16 +18,10 @@ export const metadata: Metadata = {
   description: "Ark App",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`app-bar antialiased ${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
     </html>
