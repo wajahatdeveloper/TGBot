@@ -1,272 +1,40 @@
 "use client";
 
-import useMediaQuery from '@mui/material/useMediaQuery'; // Import for responsive behavior
-
-import { Suspense, useEffect, useState } from 'react';
-import Image from "next/image";
-// import { useLaunchParams } from "@telegram-apps/sdk-react";
-import dynamic from 'next/dynamic';
-import Button from '@mui/material/Button';
-import Stats from "./components/Rewards";
-import Progression from './components/Progression';
-import Rewards from './components/Rewards';
+// React-related imports
 import * as React from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import Image from "next/image"; // For optimized images
+import useMediaQuery from '@mui/material/useMediaQuery'; // For responsive behavior
+
+// MUI components
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import {Typography } from '@mui/material';
+
+// Material-UI Icons
 import HomeIcon from '@mui/icons-material/Home';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Avatar, Typography, IconButton, AppBar, Toolbar } from '@mui/material';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'; // Import the coin icon
-import { Card, CardContent, LinearProgress} from '@mui/material';
-import BusinessIcon from '@mui/icons-material/Business';
 import SearchIcon from '@mui/icons-material/Search';
+
+// Custom Components
+import Stats from "./components/Rewards";
+import Progression from './components/Progression';
+import Rewards from './components/Rewards';
+import ComplexThumbnail from './components/ComplexThumbnail';
+import HeaderBar from './components/Headerbar';
+import ExplorationCard from './components/ExplorationCard';
+import ProfileScreen from './components/ProfileScreen';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-
-const HeaderBar = ({
-  userId,
-  coins,
-  onAvatarClick,
-}: {
-  userId: string;
-  coins: number;
-  onAvatarClick: () => void;
-}) => {
-  return (
-    <AppBar position="fixed" color="default" elevation={1} sx={{ top: 0, zIndex: 1000 }}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Challenges & Achievements
-        </Typography>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <Typography variant="body1">{coins}</Typography>
-          <Avatar
-            alt="User Avatar"
-            src={`/user-avatars/${userId}.jpg`}
-            onClick={onAvatarClick}
-            style={{ cursor: "pointer" }}
-          />
-          <IconButton>
-            <NotificationsIcon />
-          </IconButton>
-        </div>
-      </Toolbar>
-    </AppBar>
-  );
-};
-
-// Card Component for Exploration Progress
-const ExplorationCard = ({
-  city,
-  progress,
-  icon,
-  onDetailsClick,
-  image,
-}: {
-  city: string;
-  progress: number;
-  icon: JSX.Element;
-  onDetailsClick: () => void;
-  image: string;
-}) => {
-  return (
-    <Card style={{ display: 'flex', flexDirection: 'column', width: '45%', margin: '8px' }}>
-      <img
-        src={image}
-        alt={`${city} `}
-        style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px 4px 0 0' }}
-        />
-      <CardContent style={{ flexGrow: 1 }}>
-        <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '8px' }}>
-          {city} 
-        </Typography>
-        <Box display="flex" alignItems="center" gap="8px">
-          {icon}
-          <Typography variant="body2">Key Milestones</Typography>
-        </Box>
-        <Box marginY="16px">
-          <LinearProgress
-            variant="determinate"
-            value={progress * 100}
-            style={{ height: '10px', borderRadius: '4px' }}
-            />
-          <Typography variant="body2" align="right">
-            {Math.round(progress * 100)}% Complete
-          </Typography>
-        </Box>
-        <Button variant="outlined" onClick={onDetailsClick} fullWidth>
-          View Progress Details
-        </Button>
-      </CardContent>
-    </Card>
-  );
-};
-const ProfileScreen = ({
-  userId,
-  dubaiProgress,
-  sfProgress,
-  badgesCount,
-  coinsCount,
-}: {
-  userId: string;
-  dubaiProgress: number;
-  sfProgress: number;
-  badgesCount: number;
-  coinsCount: number;
-}) => {
-  return (
-    <div
-      style={{
-        padding: "16px",
-        overflowY: "scroll",
-        maxHeight: "100vh",
-        scrollbarWidth: "thin",
-        WebkitOverflowScrolling: "touch",
-      }}
-    >
-      {/* Center-align Profile Heading */}
-      <Typography
-        variant="h5"
-        style={{
-          fontWeight: "bold",
-          marginBottom: "16px",
-          textAlign: "center",
-        }}
-      >
-        Profile
-      </Typography>
-
-      {/* Profile Overview */}
-      <div style={{ textAlign: "center", marginBottom: "32px" }}>
-        <Avatar
-          alt="User Avatar"
-          src={`/user-avatars/${userId}.jpg`}
-          style={{ width: "100px", height: "100px", margin: "0 auto" }}
-        />
-        <Typography variant="h6" style={{ marginTop: "8px" }}>
-          Username
-        </Typography>
-        <Typography variant="body2">Customizable Header</Typography>
-      </div>
-
-      {/* Milestone Tracker */}
-      <div style={{ marginBottom: "32px" }}>
-        <Typography
-          variant="h6"
-          style={{
-            fontWeight: "bold",
-            marginBottom: "8px",
-          }}
-        >
-          Milestone Tracker
-        </Typography>
-        <div style={{ marginBottom: "16px" }}>
-          <Typography variant="body1" style={{ marginBottom: "4px" }}>
-            Dubai: {Math.round(dubaiProgress * 100)}% Complete
-          </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={dubaiProgress * 100}
-            style={{ height: "10px", borderRadius: "4px" }}
-          />
-        </div>
-        <div>
-          <Typography variant="body1" style={{ marginBottom: "4px" }}>
-            San Francisco: {Math.round(sfProgress * 100)}% Complete
-          </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={sfProgress * 100}
-            style={{ height: "10px", borderRadius: "4px" }}
-          />
-        </div>
-      </div>
-
-      {/* Badges & Rewards */}
-      <div style={{ marginBottom: "32px" }}>
-        <Typography
-          variant="h6"
-          style={{
-            fontWeight: "bold",
-            marginBottom: "8px",
-          }}
-        >
-          Badges & Rewards
-        </Typography>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            gap: "16px",
-          }}
-        >
-          <div
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "16px",
-              textAlign: "center",
-              backgroundColor: "#000000",
-              flex: 1,
-            }}
-          >
-            <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              Badges
-            </Typography>
-            <Typography>{badgesCount}</Typography>
-          </div>
-          <div
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "16px",
-              textAlign: "center",
-              backgroundColor: "#000000",
-              flex: 1,
-            }}
-          >
-            <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              Coins
-            </Typography>
-            <Typography>{coinsCount}</Typography>
-          </div>
-        </div>
-      </div>
-
-      {/* Settings Section */}
-      <div style={{ marginBottom: "32px" }}>
-        <Typography
-          variant="h6"
-          style={{
-            fontWeight: "bold",
-            marginBottom: "8px",
-          }}
-        >
-          Settings & Preferences
-        </Typography>
-        <Typography>Manage notifications, wallet connections, and account preferences.</Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ marginTop: "16px" }}
-          onClick={() => console.log("Settings Button Clicked")}
-        >
-          Open Settings
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 export default function Home() {
   
@@ -360,172 +128,142 @@ export default function Home() {
     }
   };
 
+
   const project = () => {
+    // Define common styles for reuse
+    const flexCenterStyle = {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    };
+  
+    const cardStyle = {
+      border: '1px solid #ccc',
+      borderRadius: '8px',
+      padding: '16px',
+      flex: 1,
+      textAlign: 'center',
+      backgroundColor: '#000000',
+    };
+  
+    const titleStyle = {
+      fontWeight: 'bold',
+      marginBottom: '16px',
+      textAlign: 'center',
+    };
+  
     switch (navValue) {
-      case 0: // home
-      return (
-        <div style={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row', // Responsive direction
-          gap: '24px',
-          alignItems: 'center',
-          justifyContent: 'center', // Center content
-          width: '100%',
-          height: '75%' // added height
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', width: '100%' }}> {/* Changed to column */}
-        <ComplexThumbnail
-            src="/dubai.jpg"
-            alt="Dubai"
-            onClick={GotoDubai}
-            label="Dubai"
-            description="Explore the luxurious and modern architecture of Dubai."
-        />
-        <ComplexThumbnail
-            src="/sf.jpg"
-            alt="San Francisco"
-            onClick={GotoSf}
-            label="San Francisco"
-            description="Discover the vibrant culture and iconic landmarks of San Francisco."
-        />
-    </div>
-    </div>
-    );
-        /*return (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Button variant="outlined" onClick={GotoDubai}>
-        Goto Dubai City
-      </Button>
-      <Button variant="outlined" onClick={GotoSf}>
-        Goto San Francisco City
-      </Button>
-    </div>
+      case 0: // Home
+        return (
+          <Box
+            sx={{
+              ...flexCenterStyle,
+              flexDirection: isMobile ? 'column' : 'row',
+              gap: '24px',
+              width: '100%',
+              height: '75%',
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', width: '100%' }}>
+              <ComplexThumbnail
+                src="/dubai.jpg"
+                alt="Dubai"
+                onClick={GotoDubai}
+                label="Dubai"
+                description="Explore the luxurious and modern architecture of Dubai."
+              />
+              <ComplexThumbnail
+                src="/sf.jpg"
+                alt="San Francisco"
+                onClick={GotoSf}
+                label="San Francisco"
+                description="Discover the vibrant culture and iconic landmarks of San Francisco."
+              />
+            </Box>
+          </Box>
         );
-        */
-        case 1: // Page 2: Exploration Progress and Achievements
+  
+      case 1: // Exploration Progress and Achievements
         return (
           <>
             {/* Header Bar */}
             <HeaderBar userId={startAppParam} coins={0} onAvatarClick={handleAvatarClick} />
-        
+  
             {/* Scrollable Content */}
-            <div
-              style={{
-                padding: "16px",
-                paddingTop: "80px", // Prevent overlap with header
-                overflowY: "scroll",
-                maxHeight: "calc(100vh - 64px)", // Adjust for header height
-                scrollbarWidth: "thin",
-                WebkitOverflowScrolling: "touch",
+            <Box
+              sx={{
+                padding: '16px',
+                paddingTop: '80px', // Prevent overlap with header
+                overflowY: 'scroll',
+                maxHeight: 'calc(100vh - 64px)', // Adjust for header height
+                scrollbarWidth: 'thin',
+                WebkitOverflowScrolling: 'touch',
               }}
             >
-              <Typography
-                variant="h5"
-                style={{
-                  fontWeight: "bold",
-                  marginBottom: "16px",
-                  textAlign: "center", // Center-align heading
-                }}
-              >
+              <Typography variant="h5" sx={titleStyle}>
                 Exploration Progress
               </Typography>
-        
+  
               {/* Progress Cards */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: isMobile ? "row" : "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "16px",
-                }}
-              >
+              <Box sx={{ display: 'flex', flexDirection: isMobile ? 'row' : 'row', gap: '16px' }}>
                 <ExplorationCard
                   city="Dubai"
                   progress={dubaiProgress}
                   icon={<SearchIcon />}
-                  onDetailsClick={() => console.log("Viewing Dubai Progress Details")}
+                  onDetailsClick={() => console.log('Viewing Dubai Progress Details')}
                   image="/dubai.jpg"
                 />
                 <ExplorationCard
                   city="San Francisco"
                   progress={sfProgress}
                   icon={<SearchIcon />}
-                  onDetailsClick={() => console.log("Viewing SF Progress Details")}
+                  onDetailsClick={() => console.log('Viewing SF Progress Details')}
                   image="/sf.jpg"
                 />
-              </div>
-        
+              </Box>
+  
               {/* Achievements Section */}
-              <div style={{ marginTop: "32px" }}>
-                <Typography
-                  variant="h5"
-                  style={{
-                    fontWeight: "bold",
-                    marginBottom: "16px",
-                    textAlign: "center", // Center-align heading
-                  }}
-                >
+              <Box sx={{ marginTop: '32px' }}>
+                <Typography variant="h5" sx={titleStyle}>
                   Achievements
                 </Typography>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: isMobile ? "column" : "row",
-                    justifyContent: "center",
-                    gap: "16px",
-                  }}
-                >
-                  <div
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      padding: "16px",
-                      flex: "1",
-                      textAlign: "center",
-                      backgroundColor: "#000000",
-                    }}
-                  >
-                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
+  
+                <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px' }}>
+                  <Box sx={cardStyle}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                       Badges
                     </Typography>
                     <Typography>Total: {0}</Typography>
-                  </div>
-                  <div
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      padding: "16px",
-                      flex: "1",
-                      textAlign: "center",
-                      backgroundColor: "#000000",
-                    }}
-                  >
-                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                  </Box>
+                  <Box sx={cardStyle}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                       Coins
                     </Typography>
                     <Typography>Total: {0}</Typography>
-                  </div>
-                </div>
-                <div style={{ marginTop: "16px", textAlign: "center" }}>
-                  {/* Center-align Leaderboard Button */}
+                  </Box>
+                </Box>
+  
+                <Box sx={{ marginTop: '16px', textAlign: 'center' }}>
                   <Button variant="contained" color="primary">
                     Leaderboard
                   </Button>
-                </div>
-              </div>
-            </div>
+                </Box>
+              </Box>
+            </Box>
           </>
         );
-      case 2: // coin
+  
+      case 2: // Coin Page
         return <p>Coin Page</p>;
-      case 3: // account
+  
+      case 3: // Account
         return (
-          <Button variant="outlined" className="w-full" onClick={shareUrl} style={{ width: '75%' }}>
+          <Button variant="outlined" className="w-full" onClick={shareUrl} sx={{ width: '75%' }}>
             Share
           </Button>
         );
-        case 4: // Profile Screen
+  
+      case 4: // Profile Screen
         return (
           <ProfileScreen
             userId={startAppParam}
@@ -535,11 +273,12 @@ export default function Home() {
             coinsCount={0} // Replace with actual coin data from Rewards
           />
         );
+  
       default:
         return <div>Invalid navigation value.</div>;
     }
   };
-
+  
 
 
   return (
@@ -563,34 +302,39 @@ export default function Home() {
       </div>
 
       {/* Responsive Bottom Navigation */}
-      <div style={{ borderTop: "1px solid #ccc", backgroundColor: "#f5f5f5" }}>
-      <Tabs
-  value={navValue}
-  onChange={handleChange}
-  aria-label="navigation tabs"
-  variant="fullWidth" // Ensure buttons are evenly spaced
-  orientation="horizontal"
-  TabIndicatorProps={{
-    style: { display: "none" }, // Hide the underline for a cleaner look
-  }}
-  style={{
+      <div style={{ borderTop: "1px solid #1b1e23", backgroundColor: "#f5f5f5" }}>
+  <Tabs
+    value={navValue}
+    onChange={handleChange}
+    aria-label="navigation tabs"
+    variant="fullWidth" // Ensure buttons are evenly spaced
+    orientation="horizontal"
+    TabIndicatorProps={{
+      sx: { display: "none" }, // Hide the underline for a cleaner look
+    }}
+  sx={{
     display: "flex",
     justifyContent: "space-between", // Evenly distribute buttons
-    backgroundColor: "#f5f5f5", // Background for the nav bar
+    backgroundColor: "#272a2f", // Background for the nav bar
     padding: "4px 0", // Add padding for mobile spacing
   }}
 >
   <Tab
-    icon={<HomeIcon style={{ fontSize: "20px" }} />}
+    icon={<HomeIcon sx={{ 
+      fontSize:"2rem",
+      fill: '#fff'
+
+    }} />}
     aria-label="Explore"
-    style={{
+    sx={{
       flexGrow: 1, // Ensure each button takes equal space
       minWidth: 0, // Prevent buttons from exceeding their container
     }}
     label={isMobile ? null : "Explore"}
   />
+  
   <Tab
-    icon={<EmojiEventsIcon style={{ fontSize: "20px" }} />}
+    icon={<EmojiEventsIcon style={{ fontSize: "2rem" }} />}
     aria-label="Achievements"
     style={{
       flexGrow: 1,
@@ -599,7 +343,7 @@ export default function Home() {
     label={isMobile ? null : "Achievements"}
   />
   <Tab
-    icon={<PaidIcon style={{ fontSize: "20px" }} />}
+    icon={<PaidIcon style={{ fontSize: "2rem" }} />}
     aria-label="Wallet"
     style={{
       flexGrow: 1,
@@ -608,7 +352,7 @@ export default function Home() {
     label={isMobile ? null : "Wallet"}
   />
   <Tab
-    icon={<ChatBubbleIcon style={{ fontSize: "20px" }} />}
+    icon={<ChatBubbleIcon style={{ fontSize: "2rem" }} />}
     aria-label="Community"
     style={{
       flexGrow: 1,
@@ -617,7 +361,7 @@ export default function Home() {
     label={isMobile ? null : "Community"}
   />
   <Tab
-    icon={<AccountCircleIcon style={{ fontSize: "20px" }} />}
+    icon={<AccountCircleIcon style={{ fontSize: "2rem" }} />}
     aria-label="Profile"
     style={{
       flexGrow: 1,
@@ -625,6 +369,7 @@ export default function Home() {
     }}
     label={isMobile ? null : "Profile"}
   />
+
 </Tabs>
 
       </div>
@@ -633,57 +378,3 @@ export default function Home() {
   );
 
 }
-
-import { StaticImageData } from 'next/image'; // Import the type
-
-interface ComplexThumbnailProps {
-    src: string | StaticImageData; // Define the type of src
-    alt: string;
-    onClick: () => void; // Define the type of onClick
-    label: string;
-    description : string;
-}
-
-const ComplexThumbnail = ({ src, alt, onClick, label, description }: ComplexThumbnailProps) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
-  return (
-      <div
-          style={{
-              cursor: 'pointer',
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out', // Smooth transitions
-              transform: isHovered ? 'scale(1.05)' : 'scale(1)', // Scale on hover
-              boxShadow: isHovered ? '0 4px 8px rgba(0, 0, 0, 0.1)' : 'none', // Subtle shadow on hover
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onClick={onClick}
-      >
-          <Image src={src} alt={alt} width={300} height={169} style={{ objectFit: 'cover' }} />
-      <div
-        style={{
-          position: 'absolute', // Overlap the image
-          bottom: 50, // Position at the bottom
-          left: 0, // Start from the left
-          right: 0, // Span the entire width
-          padding: '8px',
-          textAlign: 'center',
-          color: 'white', // Adjust text color for better visibility
-          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-          transition: 'opacity 0.2s ease-in-out', // Smooth opacity change on hover
-          opacity: isHovered ? 1 : 0.7, // Adjust opacity for hover effect
-        }}
-      >
-        
-        <p>{description}</p> {/* Description inside the description container */}
-      </div>
-      <div style={{ padding: '8px', textAlign: 'center' }}>
-
-        {label}  {/* Label outside conditional styles */} 
-      </div> 
-      </div>
-  );
-};
