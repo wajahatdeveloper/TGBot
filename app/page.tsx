@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import {Typography } from '@mui/material';
+import {Container, CssBaseline, ThemeProvider, Typography } from '@mui/material';
 
 // Material-UI Icons
 import HomeIcon from '@mui/icons-material/Home';
@@ -21,19 +21,32 @@ import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import ChatBubbleRoundedIcon from '@mui/icons-material/ChatBubbleRounded';
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+
+
 // Custom Components
 import Stats from "./components/Rewards";
 import Progression from './components/Progression';
 import Rewards from './components/Rewards';
 import ComplexThumbnail from './components/ComplexThumbnail';
-import HeaderBar from './components/Headerbar';
+import HeaderBar from './components/HeaderBar';
 import ExplorationCard from './components/ExplorationCard';
 import ProfileScreen from './components/ProfileScreen';
+import ExploreComplexesCard from './components/ExploreComplexCard';
+
+import telegramUITheme from './Theme/telegramUITheme';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+
+import "@fontsource/roboto-condensed"; // Import all weights
 
 
 export default function Home() {
@@ -61,8 +74,7 @@ export default function Home() {
   const GotoDubai = () => {
     window.open(`https://zohaibb936.itch.io/dubai?userId=${startAppParam}`, "_blank");
   };
-  
-  
+    
   const GotoSf = () => {
     window.open(`https://zohaibb936.itch.io/sanfrancisco?userId=${startAppParam}`, "_blank");
   };
@@ -154,7 +166,37 @@ export default function Home() {
   
     switch (navValue) {
       case 0: // Home
+        // return (
+        //   <Box
+        //     sx={{
+        //       ...flexCenterStyle,
+        //       flexDirection: isMobile ? 'column' : 'row',
+        //       gap: '24px',
+        //       width: '100%',
+        //       height: '75%',
+        //     }}
+        //   >
+        //     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', width: '100%' }}>
+        //       <ComplexThumbnail
+        //         src="/dubai.jpg"
+        //         alt="Dubai"
+        //         onClick={GotoDubai}
+        //         label="Dubai"
+        //         description="Explore the luxurious and modern architecture of Dubai."
+        //       />
+        //       <ComplexThumbnail
+        //         src="/sf.jpg"
+        //         alt="San Francisco"
+        //         onClick={GotoSf}
+        //         label="San Francisco"
+        //         description="Discover the vibrant culture and iconic landmarks of San Francisco."
+        //       />
+        //     </Box>
+        //   </Box>
+        // );
+
         return (
+
           <Box
             sx={{
               ...flexCenterStyle,
@@ -164,38 +206,40 @@ export default function Home() {
               height: '75%',
             }}
           >
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', width: '100%' }}>
-              <ComplexThumbnail
-                src="/dubai.jpg"
-                alt="Dubai"
-                onClick={GotoDubai}
-                label="Dubai"
-                description="Explore the luxurious and modern architecture of Dubai."
-              />
-              <ComplexThumbnail
-                src="/sf.jpg"
-                alt="San Francisco"
-                onClick={GotoSf}
-                label="San Francisco"
-                description="Discover the vibrant culture and iconic landmarks of San Francisco."
-              />
-            </Box>
+            {/* Dubai Card */}
+            <ExploreComplexesCard
+              title="Dubai"
+              description="Explore the luxurious and modern architecture of Dubai."
+              image="/dubai.jpg"
+              onClick={GotoDubai}
+            />
+            
+            {/* San Francisco Card */}
+            <ExploreComplexesCard
+              title="San Francisco"
+              description="Discover the vibrant culture and iconic landmarks of San Francisco."
+              image="/sf.jpg"
+              onClick={GotoSf}
+            />
           </Box>
+
         );
   
       case 1: // Exploration Progress and Achievements
         return (
           <>
             {/* Header Bar */}
-            <HeaderBar userId={startAppParam} coins={0} onAvatarClick={handleAvatarClick} />
-  
+            <ThemeProvider theme={telegramUITheme}>
+            <CssBaseline /> {/* Normalize CSS and apply MUI theme */}
+              <HeaderBar userId={startAppParam} coins={0} onAvatarClick={handleAvatarClick} />
+            
             {/* Scrollable Content */}
             <Box
               sx={{
                 padding: '16px',
                 paddingTop: '80px', // Prevent overlap with header
                 overflowY: 'scroll',
-                maxHeight: 'calc(100vh - 64px)', // Adjust for header height
+                maxHeight: 'calc(100vh - 64px - 20px)', // Adjust for header height
                 scrollbarWidth: 'thin',
                 WebkitOverflowScrolling: 'touch',
               }}
@@ -209,14 +253,14 @@ export default function Home() {
                 <ExplorationCard
                   city="Dubai"
                   progress={dubaiProgress}
-                  icon={<SearchIcon />}
+                  icon={<SearchRoundedIcon />}
                   onDetailsClick={() => console.log('Viewing Dubai Progress Details')}
                   image="/dubai.jpg"
                 />
                 <ExplorationCard
                   city="San Francisco"
                   progress={sfProgress}
-                  icon={<SearchIcon />}
+                  icon={<SearchRoundedIcon />}
                   onDetailsClick={() => console.log('Viewing SF Progress Details')}
                   image="/sf.jpg"
                 />
@@ -250,8 +294,10 @@ export default function Home() {
                 </Box>
               </Box>
             </Box>
+    </ThemeProvider>
           </>
         );
+
   
       case 2: // Coin Page
         return <p>Coin Page</p>;
@@ -303,6 +349,9 @@ export default function Home() {
 
       {/* Responsive Bottom Navigation */}
       <div style={{ borderTop: "1px solid #1b1e23", backgroundColor: "#f5f5f5" }}>
+
+      <ThemeProvider theme={telegramUITheme}>
+      <CssBaseline /> {/* Normalize CSS and apply MUI theme */}
   <Tabs
     value={navValue}
     onChange={handleChange}
@@ -317,60 +366,80 @@ export default function Home() {
     justifyContent: "space-between", // Evenly distribute buttons
     backgroundColor: "#272a2f", // Background for the nav bar
     padding: "4px 0", // Add padding for mobile spacing
-  }}
+    fontFamily:'Roboto Condensed',
+    fontSize:'.7rem',
+    
+    //style tabs
+    "& button": {borderRadius:'.6rem'},
+    "& button.Mui-selected": {backgroundColor:'#1b1e23',color: '#fff', fontSize:'.7rem', fontWeight:'200'},
+    }}
 >
   <Tab
-    icon={<HomeIcon sx={{ 
+    icon={<HomeRoundedIcon sx={{ 
       fontSize:"2rem",
-      fill: '#fff'
-
     }} />}
     aria-label="Explore"
     sx={{
       flexGrow: 1, // Ensure each button takes equal space
       minWidth: 0, // Prevent buttons from exceeding their container
+      textTransform:'none',
+      fontSize:'0.70rem'
     }}
-    label={isMobile ? null : "Explore"}
+    // label={isMobile ? null : "Explore"}
+    label="Explore"
   />
   
   <Tab
-    icon={<EmojiEventsIcon style={{ fontSize: "2rem" }} />}
+    icon={<EmojiEventsRoundedIcon style={{ fontSize: "2rem" }} />}
     aria-label="Achievements"
     style={{
       flexGrow: 1,
       minWidth: 0,
+      textTransform:'none',
+      fontSize:'0.70rem'
     }}
-    label={isMobile ? null : "Achievements"}
+    // label={isMobile ? null : "Achievements"}
+    label="Achievements"
   />
   <Tab
-    icon={<PaidIcon style={{ fontSize: "2rem" }} />}
+    icon={<PaidRoundedIcon style={{ fontSize: "2rem" }} />}
     aria-label="Wallet"
     style={{
       flexGrow: 1,
       minWidth: 0,
+      textTransform:'none',
+      fontSize:'0.70rem'
     }}
-    label={isMobile ? null : "Wallet"}
+    // label={isMobile ? null : "Wallet"}
+    label="Wallet"
   />
   <Tab
-    icon={<ChatBubbleIcon style={{ fontSize: "2rem" }} />}
+    icon={<ChatBubbleRoundedIcon style={{ fontSize: "2rem" }} />}
     aria-label="Community"
     style={{
       flexGrow: 1,
       minWidth: 0,
+      textTransform:'none',
+      fontSize:'0.70rem'
     }}
-    label={isMobile ? null : "Community"}
+    // label={isMobile ? null : "Community"}
+    label="Community"
   />
   <Tab
-    icon={<AccountCircleIcon style={{ fontSize: "2rem" }} />}
+    icon={<AccountCircleRoundedIcon style={{ fontSize: "2rem" }} />}
     aria-label="Profile"
     style={{
       flexGrow: 1,
       minWidth: 0,
+      textTransform:'none',
+      fontSize:'0.70rem'
     }}
-    label={isMobile ? null : "Profile"}
+    // label={isMobile ? null : "Profile"}
+    label="Profile"
   />
 
 </Tabs>
+</ThemeProvider>
 
       </div>
     </div>

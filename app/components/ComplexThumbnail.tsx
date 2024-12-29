@@ -2,6 +2,9 @@ import React, { useState, useCallback } from 'react';
 import Image, { StaticImageData } from 'next/image'; // Import Image from next/image
 import { Box, Card, CardContent, Typography } from '@mui/material';
 
+import "@fontsource/roboto-condensed"; // Import all weights
+
+
 // Define the props interface with StaticImageData support for Next.js
 interface ComplexThumbnailProps {
   src: string | StaticImageData;
@@ -54,7 +57,7 @@ const ComplexThumbnail = ({
           right: 0,
           padding: '8px',
           textAlign: 'center',
-          color: 'white',
+          color: '#fff',
           backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
           transition: 'opacity 0.2s ease-in-out',
           opacity: isHovered ? 1 : 0.7, // Opacity change on hover

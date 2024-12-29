@@ -6,12 +6,12 @@
 :root {
   --background: #000000;
   --foreground: #ededed;
-  --primary-color: #ffffff; /* Adjusted Neon Blue for better contrast */
-  /* --primary-color: #3399ff; Adjusted Neon Blue for better contrast */
+  --primary-color: #3399ff; /*Adjusted Neon Blue for better contrast */
   --secondary-color: #9b30ff; /* Slightly lighter Purple */
   --glow: rgba(51, 153, 255, 0.7); /* Enhanced Blue Glow Effect */
-  --font: "Lato", sans-serif;
-  /* --font: "Roboto", sans-serif; */
+  /* --font: "Lato", sans-serif; */
+  --font: "Roboto", sans-serif;
+  --fontCondensed: "Roboto Condensed", sans-serif;
 }
 
 body {
@@ -91,15 +91,17 @@ p {
 
 .bottom-nav .Mui-selected {
   /* color: var(--primary-color) !important; */
-  fill: var(--foreground);
+  /* fill: var(--foreground); */
   background-color: #1b1e23 !important;
 }
 
 .bottom-nav .MuiTab-root {
   min-width: 50px !important;
+  
 }
 
 .bottom-nav .MuiTab-root .MuiSvgIcon-root {
   /* color: var(--foreground) !important; */
+  text-transform:'none';
   fill: #fff !important;
 }
