@@ -25,23 +25,14 @@ const ExplorationCard: React.FC<ExplorationCardProps> = ({
 }) => {
   return (
     <Card
-      sx={{
-        width: "320",
-        height: "345",
-        display: "flex",
-        flexDirection: "column",
-        //width: "90%",
-        margin: 1,
-        flex: "0 0 100%",
-        //minWidth: "100vw",
-      }}
+      sx={{ display: "flex", flexDirection: "column", width: "45%", margin: 1 }}
     >
       <Box
         sx={{
           width: "100%",
-          height: "30%",
+          height: 80,
           overflow: "hidden",
-          borderRadius: "6px 6px 0 0",
+          borderRadius: "4px 4px 0 0",
         }}
       >
         <img
@@ -55,32 +46,12 @@ const ExplorationCard: React.FC<ExplorationCardProps> = ({
         />
       </Box>
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-            marginBottom: "1rem",
-          }}
-        >
+        <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 1 }}>
           {city}
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           {icon}
-          <Typography
-            variant="body2"
-            sx={{
-              marginLeft: "5px",
-              fontSize: "1rem",
-            }}
-          >
-            Key Milestones
-          </Typography>
+          <Typography variant="body2">Key Milestones</Typography>
         </Box>
         <Box sx={{ my: 2 }}>
           <LinearProgress

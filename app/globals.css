@@ -7,6 +7,7 @@
   --background: #000000;
   --foreground: #ededed;
   --primary-color: #3399ff; /*Adjusted Neon Blue for better contrast */
+  --prmary-color-hamster:#5f5ffc;
   --secondary-color: #9b30ff; /* Slightly lighter Purple */
   --glow: rgba(51, 153, 255, 0.7); /* Enhanced Blue Glow Effect */
   /* --font: "Lato", sans-serif; */
