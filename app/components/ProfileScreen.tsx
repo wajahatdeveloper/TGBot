@@ -18,13 +18,21 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
 }) => {
   return (
     <Box
-      sx={{
-        padding: 2,
-        overflowY: 'scroll',
-        maxHeight: '100vh',
-        scrollbarWidth: 'thin',
-        WebkitOverflowScrolling: 'touch',
-      }}
+    sx={{
+      padding: "16px",
+      paddingTop: "80px", // Prevent overlap with header
+      overflowY: "scroll",
+      maxHeight: "calc(100vh - 64px - 20px)", // Adjust for header height
+      scrollbarWidth: "thin",
+      WebkitOverflowScrolling: "touch",
+    }}
+      // sx={{
+      //   padding: 2,
+      //   overflowY: 'scroll',
+      //   maxHeight: '100vh',
+      //   scrollbarWidth: 'thin',
+      //   WebkitOverflowScrolling: 'touch',
+      // }}
     >
       {/* Profile Heading */}
       <Typography variant="h5" sx={{ fontWeight: 'bold', marginBottom: 2, textAlign: 'center' }}>

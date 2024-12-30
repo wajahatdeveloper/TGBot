@@ -157,12 +157,12 @@ export default function Home() {
     };
 
     const cardStyle = {
-      border: "1px solid #ccc",
-      borderRadius: "8px",
+      // border: "1px solid #ccc",
+      borderRadius: "25px",
       padding: "16px",
       flex: 1,
       textAlign: "center",
-      backgroundColor: "#000000",
+      backgroundColor: "#272a2f",
     };
 
     const titleStyle = {
@@ -303,10 +303,10 @@ export default function Home() {
       case 3: // Account
         return (
           <Button
-            variant="outlined"
+            variant="contained"
             className="w-full"
             onClick={shareUrl}
-            sx={{ width: "75%" }}
+            sx={{ width: "75%" , borderRadius:'12px'}}
           >
             Share
           </Button>
@@ -320,7 +320,7 @@ export default function Home() {
             sfProgress={sfProgress}
             badgesCount={0} // Replace with actual badge data from Rewards
             coinsCount={0} // Replace with actual coin data from Rewards
-          />
+            />
         );
 
       default:

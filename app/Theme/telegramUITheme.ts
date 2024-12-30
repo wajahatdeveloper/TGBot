@@ -43,9 +43,42 @@ const telegramUITheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: '8px', // Rounded corners (Telegram style)
-          textTransform: 'none',
-          padding: '6px 16px',
+          borderRadius: '12px', // Rounded corners for all buttons
+          textTransform: 'none', // Remove uppercase transformation
+          padding: '8px 16px', // Standard padding for buttons
+          fontSize: '0.9rem', // Adjusted font size
+          boxShadow: 'none', // Remove default shadow
+          position: 'relative', // Required for pseudo-element
+          overflow: 'hidden', // Prevent visual overflow
+          color: '#ffffff',
+          '&:hover': {
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Add hover shadow
+          },
+          '&:active': {
+            textShadow: '0 0 10px #5e5cfd, 0 0 20px #5e5cfd, 0 0 30px #5e5cfd', // Neon text glow
+            animation: 'textGlow 2s ease-out', // Glow animation
+          },
+        },
+        contained: {
+          backgroundColor: '#5e5cfd', // Default background for contained buttons
+          color: '#ffffff', // White text
+          '&:hover': {
+            backgroundColor: '#0077b3', // Slightly darker blue on hover
+          },
+        },
+        outlined: {
+          borderColor: '#4caf50', // Green border for outlined buttons
+          color: '#4caf50', // Green text
+          '&:hover': {
+            borderColor: '#43a047', // Darker green border on hover
+            backgroundColor: 'rgba(76, 175, 80, 0.1)', // Light green background on hover
+          },
+        },
+        text: {
+          color: '#b0b0b0', // Default text button color
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.1)', // Light hover background
+          },
         },
       },
     },
@@ -108,6 +141,14 @@ const telegramUITheme = createTheme({
           '&.Mui-selected .MuiTab-icon': {
             color: '#fdffff', // Selected icon color
           },
+        },
+      },
+    },
+    MuiTouchRipple: {
+      styleOverrides: {
+        root: {
+          color: '#fff', // Ripple color for tabs
+          animationDuration: '1000ms',
         },
       },
     },

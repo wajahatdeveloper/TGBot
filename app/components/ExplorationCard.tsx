@@ -26,7 +26,7 @@ const ExplorationCard: React.FC<ExplorationCardProps> = ({
   return (
     <Card
       sx={{
-        width: "320",
+        width: "345",
         height: "345",
         display: "flex",
         flexDirection: "column",
@@ -92,7 +92,7 @@ const ExplorationCard: React.FC<ExplorationCardProps> = ({
             {Math.round(progress * 100)}% Complete
           </Typography>
         </Box>
-        <Button variant="outlined" onClick={onDetailsClick} fullWidth>
+        <Button variant="contained" onClick={onDetailsClick} fullWidth sx={{backgroundcolor:'#5e5cfd'}}>
           View Progress Details
         </Button>
       </CardContent>
