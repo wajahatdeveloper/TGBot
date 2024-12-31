@@ -57,7 +57,12 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <Avatar
             alt="User Avatar"
             src={`/user-avatars/${userId}.jpg`}
-            sx={{ width: 100, height: 100, margin: "0 auto" }}
+            sx={{
+              width: 100,
+              height: 100,
+              margin: "0 auto",
+              border: "1px solid white",
+            }}
           />
           <Typography variant="h6" sx={{ marginTop: 1 }}>
             Username
@@ -104,12 +109,12 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           >
             <Box
               sx={{
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                padding: 2,
+                boarder: "8px solid #2f3442",
                 textAlign: "center",
-                backgroundColor: "#000",
+                borderRadius: "25px",
+                padding: "16px",
                 flex: 1,
+                backgroundColor: "#272a2f",
               }}
             >
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -119,12 +124,12 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
             </Box>
             <Box
               sx={{
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                padding: 2,
+                boarder: "8px solid #2f3442",
                 textAlign: "center",
-                backgroundColor: "#000",
+                borderRadius: "25px",
+                padding: "16px",
                 flex: 1,
+                backgroundColor: "#272a2f",
               }}
             >
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>

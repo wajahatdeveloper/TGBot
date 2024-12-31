@@ -45,6 +45,8 @@ import ExploreComplexesCard from "./components/ExploreComplexCard";
 
 import telegramUITheme from "./Theme/telegramUITheme";
 
+import trophyIcon from "./icons/Trophy.png";
+
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -410,7 +412,18 @@ export default function Home() {
               />
 
               <Tab
-                icon={<EmojiEventsRoundedIcon style={{ fontSize: "2rem" }} />}
+                icon={
+                  // <EmojiEventsRoundedIcon style={{ fontSize: "2rem" }} />
+                  <img
+                    src="/icons/Trophy.png"
+                    alt="trophy Icon"
+                    style={{
+                      width: "32px", // Adjust icon size as needed
+                      height: "32px",
+                      objectFit: "contain",
+                    }}
+                  />
+                }
                 aria-label="Achievements"
                 style={{
                   flexGrow: 1,
@@ -422,7 +435,18 @@ export default function Home() {
                 label="Achievements"
               />
               <Tab
-                icon={<PaidRoundedIcon style={{ fontSize: "2rem" }} />}
+                icon={
+                  // <PaidRoundedIcon style={{ fontSize: "2rem" }} />
+                  <img
+                    src="/icons/ark-crypto-coin.png"
+                    alt="ark Icon"
+                    style={{
+                      width: "32px", // Adjust icon size as needed
+                      height: "32px",
+                      objectFit: "contain",
+                    }}
+                  />
+                }
                 aria-label="Wallet"
                 style={{
                   flexGrow: 1,
