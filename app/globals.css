@@ -13,12 +13,13 @@
   /* --font: "Lato", sans-serif; */
   --font: "Roboto", sans-serif;
   --fontCondensed: "Roboto Condensed", sans-serif;
+  --fontSans: "Open Sans", sans-serif;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font);
+  font-family: var(--fontSans);
 }
 
 h1,

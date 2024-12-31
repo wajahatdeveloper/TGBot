@@ -1,5 +1,14 @@
-import React from 'react';
-import { Box, Typography, Avatar, LinearProgress, Button } from '@mui/material';
+import React from "react";
+import {
+  Box,
+  Typography,
+  Avatar,
+  LinearProgress,
+  Button,
+  ThemeProvider,
+  CssBaseline,
+} from "@mui/material";
+import telegramUITheme from "../Theme/telegramUITheme";
 
 interface ProfileScreenProps {
   userId: string;
@@ -18,14 +27,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
 }) => {
   return (
     <Box
-    sx={{
-      padding: "16px",
-      paddingTop: "80px", // Prevent overlap with header
-      overflowY: "scroll",
-      maxHeight: "calc(100vh - 64px - 20px)", // Adjust for header height
-      scrollbarWidth: "thin",
-      WebkitOverflowScrolling: "touch",
-    }}
+      sx={{
+        padding: "16px",
+        paddingTop: "80px", // Prevent overlap with header
+        overflowY: "scroll",
+        maxHeight: "calc(100vh - 64px - 20px)", // Adjust for header height
+        scrollbarWidth: "thin",
+        WebkitOverflowScrolling: "touch",
+      }}
       // sx={{
       //   padding: 2,
       //   overflowY: 'scroll',
@@ -35,112 +44,114 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
       // }}
     >
       {/* Profile Heading */}
-      <Typography variant="h5" sx={{ fontWeight: 'bold', marginBottom: 2, textAlign: 'center' }}>
+      <Typography
+        variant="h5"
+        sx={{ fontWeight: "bold", marginBottom: 2, textAlign: "center" }}
+      >
         Profile
       </Typography>
-
-      {/* Profile Overview */}
-      <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
-        <Avatar
-          alt="User Avatar"
-          src={`/user-avatars/${userId}.jpg`}
-          sx={{ width: 100, height: 100, margin: '0 auto' }}
-        />
-        <Typography variant="h6" sx={{ marginTop: 1 }}>
-          Username
-        </Typography>
-        <Typography variant="body2">Customizable Header</Typography>
-      </Box>
-
-      {/* Milestone Tracker */}
-      <Box sx={{ marginBottom: 4 }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-          Milestone Tracker
-        </Typography>
-        <Box sx={{ marginBottom: 2 }}>
-          <Typography variant="body1" sx={{ marginBottom: 1 }}>
-            Dubai: {Math.round(dubaiProgress * 100)}% Complete
-          </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={dubaiProgress * 100}
-            sx={{ height: 10, borderRadius: 4 }}
+      <ThemeProvider theme={telegramUITheme}>
+        <CssBaseline /> {/* Normalize CSS and apply MUI theme */}
+        {/* Profile Overview */}
+        <Box sx={{ textAlign: "center", marginBottom: 4 }}>
+          <Avatar
+            alt="User Avatar"
+            src={`/user-avatars/${userId}.jpg`}
+            sx={{ width: 100, height: 100, margin: "0 auto" }}
           />
-        </Box>
-        <Box>
-          <Typography variant="body1" sx={{ marginBottom: 1 }}>
-            San Francisco: {Math.round(sfProgress * 100)}% Complete
+          <Typography variant="h6" sx={{ marginTop: 1 }}>
+            Username
           </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={sfProgress * 100}
-            sx={{ height: 10, borderRadius: 4 }}
-          />
+          <Typography variant="body2">Customizable Header</Typography>
         </Box>
-      </Box>
-
-      {/* Badges & Rewards */}
-      <Box sx={{ marginBottom: 4 }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-          Badges & Rewards
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            gap: 2,
-          }}
-        >
-          <Box
-            sx={{
-              border: '1px solid #ccc',
-              borderRadius: 2,
-              padding: 2,
-              textAlign: 'center',
-              backgroundColor: '#000',
-              flex: 1,
-            }}
-          >
-            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              Badges
+        {/* Milestone Tracker */}
+        <Box sx={{ marginBottom: 4 }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+            Milestone Tracker
+          </Typography>
+          <Box sx={{ marginBottom: 2 }}>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>
+              Dubai: {Math.round(dubaiProgress * 100)}% Complete
             </Typography>
-            <Typography>{badgesCount}</Typography>
+            <LinearProgress
+              variant="determinate"
+              value={dubaiProgress * 100}
+              sx={{ height: 10, borderRadius: 4 }}
+            />
           </Box>
-          <Box
-            sx={{
-              border: '1px solid #ccc',
-              borderRadius: 2,
-              padding: 2,
-              textAlign: 'center',
-              backgroundColor: '#000',
-              flex: 1,
-            }}
-          >
-            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              Coins
+          <Box>
+            <Typography variant="body1" sx={{ marginBottom: 1 }}>
+              San Francisco: {Math.round(sfProgress * 100)}% Complete
             </Typography>
-            <Typography>{coinsCount}</Typography>
+            <LinearProgress
+              variant="determinate"
+              value={sfProgress * 100}
+              sx={{ height: 10, borderRadius: 4 }}
+            />
           </Box>
         </Box>
-      </Box>
-
-      {/* Settings Section */}
-      <Box sx={{ marginBottom: 4 }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
-          Settings & Preferences
-        </Typography>
-        <Typography>
-          Manage notifications, wallet connections, and account preferences.
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ marginTop: 2 }}
-          onClick={() => console.log("Settings Button Clicked")}
-        >
-          Open Settings
-        </Button>
-      </Box>
+        {/* Badges & Rewards */}
+        <Box sx={{ marginBottom: 4 }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+            Badges & Rewards
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+              gap: 2,
+            }}
+          >
+            <Box
+              sx={{
+                border: "1px solid #ccc",
+                borderRadius: 2,
+                padding: 2,
+                textAlign: "center",
+                backgroundColor: "#000",
+                flex: 1,
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Badges
+              </Typography>
+              <Typography>{badgesCount}</Typography>
+            </Box>
+            <Box
+              sx={{
+                border: "1px solid #ccc",
+                borderRadius: 2,
+                padding: 2,
+                textAlign: "center",
+                backgroundColor: "#000",
+                flex: 1,
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Coins
+              </Typography>
+              <Typography>{coinsCount}</Typography>
+            </Box>
+          </Box>
+        </Box>
+        {/* Settings Section */}
+        <Box sx={{ marginBottom: 4 }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+            Settings & Preferences
+          </Typography>
+          <Typography>
+            Manage notifications, wallet connections, and account preferences.
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ marginTop: 2 }}
+            onClick={() => console.log("Settings Button Clicked")}
+          >
+            Open Settings
+          </Button>
+        </Box>
+      </ThemeProvider>
     </Box>
   );
 };

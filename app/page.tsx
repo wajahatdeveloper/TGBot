@@ -302,14 +302,17 @@ export default function Home() {
 
       case 3: // Account
         return (
-          <Button
-            variant="contained"
-            className="w-full"
-            onClick={shareUrl}
-            sx={{ width: "75%" , borderRadius:'12px'}}
-          >
-            Share
-          </Button>
+          <ThemeProvider theme={telegramUITheme}>
+            <CssBaseline /> {/* Normalize CSS and apply MUI theme */}
+            <Button
+              variant="contained"
+              className="w-full"
+              onClick={shareUrl}
+              sx={{ width: "75%", borderRadius: "12px" }}
+            >
+              Share
+            </Button>
+          </ThemeProvider>
         );
 
       case 4: // Profile Screen
@@ -320,7 +323,7 @@ export default function Home() {
             sfProgress={sfProgress}
             badgesCount={0} // Replace with actual badge data from Rewards
             coinsCount={0} // Replace with actual coin data from Rewards
-            />
+          />
         );
 
       default:

@@ -45,7 +45,7 @@ const telegramUITheme = createTheme({
         root: {
           borderRadius: '12px', // Rounded corners for all buttons
           textTransform: 'none', // Remove uppercase transformation
-          padding: '8px 16px', // Standard padding for buttons
+          padding: '12px 16px', // Standard padding for buttons
           fontSize: '0.9rem', // Adjusted font size
           boxShadow: 'none', // Remove default shadow
           position: 'relative', // Required for pseudo-element
@@ -85,10 +85,11 @@ const telegramUITheme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: '#333333', // Darker cards
+          backgroundColor: '#272a2f', // Darker cards
           borderRadius: '8px',
           boxShadow: 'none',
           padding: '12px',
+          boarder:'8px solid #2f3442'
         },
       },
     },
