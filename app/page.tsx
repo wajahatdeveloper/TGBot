@@ -413,16 +413,16 @@ export default function Home() {
 
               <Tab
                 icon={
-                  // <EmojiEventsRoundedIcon style={{ fontSize: "2rem" }} />
-                  <img
-                    src="/icons/Trophy.png"
-                    alt="trophy Icon"
-                    style={{
-                      width: "32px", // Adjust icon size as needed
-                      height: "32px",
-                      objectFit: "contain",
-                    }}
-                  />
+                  <EmojiEventsRoundedIcon style={{ fontSize: "2rem" }} />
+                  // <img
+                  //   src="/icons/Trophy.png"
+                  //   alt="trophy Icon"
+                  //   style={{
+                  //     width: "32px", // Adjust icon size as needed
+                  //     height: "32px",
+                  //     objectFit: "contain",
+                  //   }}
+                  // />
                 }
                 aria-label="Achievements"
                 style={{
@@ -436,16 +436,16 @@ export default function Home() {
               />
               <Tab
                 icon={
-                  // <PaidRoundedIcon style={{ fontSize: "2rem" }} />
-                  <img
-                    src="/icons/ark-crypto-coin.png"
-                    alt="ark Icon"
-                    style={{
-                      width: "32px", // Adjust icon size as needed
-                      height: "32px",
-                      objectFit: "contain",
-                    }}
-                  />
+                  <PaidRoundedIcon style={{ fontSize: "2rem" }} />
+                  // <img
+                  //   src="/icons/ark-crypto-coin.png"
+                  //   alt="ark Icon"
+                  //   style={{
+                  //     width: "32px", // Adjust icon size as needed
+                  //     height: "32px",
+                  //     objectFit: "contain",
+                  //   }}
+                  // />
                 }
                 aria-label="Wallet"
                 style={{
